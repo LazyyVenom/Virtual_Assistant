@@ -6,12 +6,17 @@ import math
 
 #LETS DO IT OOPS STYLE
 class HandDetector():
-    def __init__(self) -> None:
-        mode=False,
-        max_num_hands=2,
-        model_complexity=1,
-        min_detection_confidence=0.5,
-        min_tracking_confidence=0.5
+    def __init__(self,mode=False,numOfHands=2,complexity=1,minConfidence=0.5) -> None:
+        self.mode = mode
+        self.numOfHands = numOfHands
+        self.complexity = complexity
+        self.minConfidence = minConfidence
+
+        self.mpHands = mp.solutions.hands
+        self.mpDraws = mp.solutions.drawing_utils
+
+        self.hands = self.mpHands
+
 
     def giveAllPoints():
         pass

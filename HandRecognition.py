@@ -19,73 +19,85 @@ class HandDetector():
             self.mode, self.numOfHands, self.complexity, self.minConfidence
         )
 
-    def giveAllPoints(img, draw: bool, color: tuple) -> list:
+
+    def giveAllPoints(self, img, color: tuple, draw: bool = True):
         """
         Will Give All the 21 Points of the hand.
         """
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
+        results = self.hands.process(imgRGB)
+
+        hands = []
+        if results.multi_hand_landmarks:
+
+            for hand_landmarks in results.multi_hand_landmarks:
+                bcUpper = [0,0]
+                bcLower = [0,0]
+                points = []
+
+                for id, landmark in enumerate(hand_landmarks.landmark):
+                    h, w, c = img.shape
+                    cx, cy = int(landmark.x * w), int(landmark.y * h)
+                    # print(f"Point {id}: ({cx}, {cy})")
+                    points.append([id,cx,cy])
+
+                    if draw:
+                        if id == 0:
+                            bcLower = [cx,cy]
+                        
+                        elif id == 5:
+                            bcUpper = [cx,cy]
+
+                        if id in [4,8,12,16,20]:
+                            cv2.circle(img, (cx, cy), 10, color, cv2.FILLED)
+
+                if draw:
+                    big_circle_pts = (((bcLower[0]+bcUpper[0])//2),
+                                ((bcLower[1]+bcUpper[1])//2) )
+
+                    big_circle_radius = int(math.sqrt((bcUpper[1] - bcLower[1])**2 +
+                                                (bcUpper[0] - bcLower[0])**2) // 2)
+
+                    cv2.circle(img, big_circle_pts, big_circle_radius, color, cv2.FILLED)
+
+                    self.mpDraws.draw_landmarks(
+                            img, hand_landmarks, self.mpHands.HAND_CONNECTIONS)
+
+                hands.append(points)
+        
+        return hands,img
 
 
-cap = cv2.VideoCapture(0)
+def main():
+    """
+    Sample Of How You Should Use These Functions.
+    """
+    cap = cv2.VideoCapture(0)
 
-mpHands = mp.solutions.hands
-mpDraws = mp.solutions.drawing_utils
-hands = mpHands.Hands()
+    handsDetector = HandDetector()
 
-pTime = 0
-cTime = 0
+    pTime = 0
+    cTime = 0
 
-while True:
-    success, img = cap.read()
+    while True:
+        success, img = cap.read()
 
-    imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        hands,img = handsDetector.giveAllPoints(img,(255,0,255))
 
-    results = hands.process(imgRGB)
+        cTime = time.time()
+        fps = 1/(cTime-pTime)
+        pTime = cTime
 
-    if results.multi_hand_landmarks:
-        for hand_landmarks in results.multi_hand_landmarks:
-            bcUpper = [0,0]
-            bcLower = [0,0]
-            for id, landmark in enumerate(hand_landmarks.landmark):
-                h, w, c = img.shape
-                cx, cy = int(landmark.x * w), int(landmark.y * h)
-                print(f"Point {id}: ({cx}, {cy})")
+        print(hands)
 
-                if id == 0:
-                    bcLower = [cx,cy]
-                
-                if id == 5:
-                    bcUpper = [cx,cy]
+        cv2.putText(img,str(int(fps)), (10,70), cv2.FONT_HERSHEY_COMPLEX,2,(0,0,255))
+        cv2.imshow("Hand Tracking", img)
 
-                if id in [4,8,12,16,20]:
-                    cv2.circle(img, (cx, cy), 10, (255, 0, 0), cv2.FILLED)
-            
-            big_circle_pts = (((bcLower[0]+bcUpper[0])//2),
-                              ((bcLower[1]+bcUpper[1])//2) )
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            cap.release()
+            cv2.destroyAllWindows()
+            break
 
-            big_circle_radius = int(math.sqrt((bcUpper[1] - bcLower[1])**2 +
-                                          (bcUpper[0] - bcLower[0])**2) // 2)
-
-            cv2.circle(img, big_circle_pts, big_circle_radius, (255,0,255), cv2.FILLED)
-
-            print(f"LOWER INDEX-0:{bcLower}")
-            print(f"UPPER INDEX-5:{bcUpper}")
-            print(f"BIG CIRCLE POINTS:{big_circle_pts}")
-            print(f"BIG CIRCLE RADIUS:{big_circle_radius}")
-
-            mpDraws.draw_landmarks(
-                img, hand_landmarks, mpHands.HAND_CONNECTIONS)
-    
-    cTime = time.time()
-    fps = 1/(cTime-pTime)
-    pTime = cTime
-
-    cv2.putText(img,str(int(fps)), (10,70), cv2.FONT_HERSHEY_COMPLEX,2,(0,0,255))
-    cv2.imshow("Hand Tracking", img)
-
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-
-cap.release()
-cv2.destroyAllWindows()
+if __name__ == '__main__':
+    main()

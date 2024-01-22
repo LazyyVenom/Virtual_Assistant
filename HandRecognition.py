@@ -26,10 +26,10 @@ while True:
                 h, w, c = img.shape
                 cx, cy = int(landmark.x * w), int(landmark.y * h)
                 print(f"Point {id}: ({cx}, {cy})")
-                cv2.circle(img, (cx, cy), 10, (255, 0, 0), cv2.FILLED)
+                # cv2.circle(img, (cx, cy), 10, (255, 0, 0), cv2.FILLED)
 
             mp.solutions.drawing_utils.draw_landmarks(
-                img, hand_landmarks)
+                img, hand_landmarks, mpHands.HAND_CONNECTIONS)
 
     cv2.imshow("Hand Tracking", img)
 

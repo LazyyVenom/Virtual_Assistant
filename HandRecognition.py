@@ -5,9 +5,20 @@ import time
 import math
 
 #LETS DO IT OOPS STYLE
-class Hand_Recognizer():
+class HandDetector():
     def __init__(self) -> None:
+        mode=False,
+        max_num_hands=2,
+        model_complexity=1,
+        min_detection_confidence=0.5,
+        min_tracking_confidence=0.5
+
+    def giveAllPoints():
         pass
+
+    def giveImpPoints():
+        pass
+
 
 cap = cv2.VideoCapture(0)
 

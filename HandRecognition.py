@@ -19,17 +19,12 @@ class HandDetector():
             self.mode, self.numOfHands, self.complexity, self.minConfidence
         )
 
-    def giveAllPoints(draw: bool, color: tuple) -> list:
+    def giveAllPoints(img, draw: bool, color: tuple) -> list:
         """
         Will Give All the 21 Points of the hand.
         """
-        pass
+        imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
-    def giveImpPoints(draw: bool, color: tuple) -> list:
-        """
-        Will Give Some Vital Points Instead of all 21 points.
-        """
-        pass
 
 
 cap = cv2.VideoCapture(0)

@@ -16,8 +16,14 @@ while True:
 
     if results.multi_hand_landmarks:
         for hand_landmarks in results.multi_hand_landmarks:
+            for id, landmark in enumerate(hand_landmarks.landmark):
+                h, w, c = img.shape
+                cx, cy = int(landmark.x * w), int(landmark.y * h)
+                print(f"Point {id}: ({cx}, {cy})")
+                cv2.circle(img, (cx, cy), 10, (255, 0, 0), cv2.FILLED)
+
             mp.solutions.drawing_utils.draw_landmarks(
-                img, hand_landmarks, mpHands.HAND_CONNECTIONS)
+                img, hand_landmarks)
 
     cv2.imshow("Hand Tracking", img)
 

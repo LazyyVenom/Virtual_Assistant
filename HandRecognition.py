@@ -1,6 +1,12 @@
+#IMPORTING REQUIRED LIBRARIES FOR HAND RECOGNITION...
 import cv2
 import mediapipe as mp
 import time
+
+#LETS DO IT OOPS STYLE
+class Hand_Recognizer():
+    def __init__(self) -> None:
+        pass
 
 cap = cv2.VideoCapture(0)
 

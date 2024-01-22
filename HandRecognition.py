@@ -15,13 +15,18 @@ class HandDetector():
         self.mpHands = mp.solutions.hands
         self.mpDraws = mp.solutions.drawing_utils
 
-        self.hands = self.mpHands
+        self.hands = self.mpHands.Hands()
 
-
-    def giveAllPoints():
+    def giveAllPoints(draw: bool) -> list:
+        """
+        Will Give All the 21 Points of the hand.
+        """
         pass
 
-    def giveImpPoints():
+    def giveImpPoints(draw: bool) -> list:
+        """
+        Will Give Some Vital Points Instead of all 21 points.
+        """
         pass
 
 

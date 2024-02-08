@@ -20,7 +20,7 @@ class HandDetector():
         )
 
 
-    def giveAllPoints(self, img, color: tuple, draw: bool = True):
+    def giveAllPoints(self, img, color: tuple = (255,255,255), draw: bool = True,connections: bool = True):
         """
         Will Give All the 21 Points of the hand.
         """
@@ -53,13 +53,24 @@ class HandDetector():
                             cv2.circle(img, (cx, cy), 10, color, cv2.FILLED)
 
                 if draw:
-                    big_circle_pts = (((bcLower[0]+bcUpper[0])//2),
-                                ((bcLower[1]+bcUpper[1])//2) )
+                    big_circle_pts, big_circle_radius = (), 0
+                    if points[4][1] > points[20][1]:
+                        big_circle_pts = (((bcLower[0]+bcUpper[0])//2 - 6),
+                                    ((bcLower[1]+bcUpper[1])//2) - 5)
 
-                    big_circle_radius = int(math.sqrt((bcUpper[1] - bcLower[1])**2 +
-                                                (bcUpper[0] - bcLower[0])**2) // 2)
+                        big_circle_radius = int(math.sqrt((bcUpper[1] - bcLower[1])**2 +
+                                                    (bcUpper[0] - bcLower[0])**2) // 2) - 4
+                        
+                    else:
+                        big_circle_pts = (((bcLower[0]+bcUpper[0])//2 + 6),
+                                    ((bcLower[1]+bcUpper[1])//2) - 5)
+
+                        big_circle_radius = int(math.sqrt((bcUpper[1] - bcLower[1])**2 +
+                                                    (bcUpper[0] - bcLower[0])**2) // 2) - 4
 
                     cv2.circle(img, big_circle_pts, big_circle_radius, color, cv2.FILLED)
+
+                if connections:
 
                     self.mpDraws.draw_landmarks(
                             img, hand_landmarks, self.mpHands.HAND_CONNECTIONS)
@@ -75,6 +86,9 @@ def main():
     """
     cap = cv2.VideoCapture(0)
 
+    cap.set(4,240)
+    cap.set(5,480)
+
     handsDetector = HandDetector()
 
     pTime = 0
@@ -83,7 +97,7 @@ def main():
     while True:
         success, img = cap.read()
 
-        hands,img = handsDetector.giveAllPoints(img,(255,0,255))
+        hands,img = handsDetector.giveAllPoints(img,(255,0,255),connections=False)
 
         cTime = time.time()
         fps = 1/(cTime-pTime)
@@ -91,7 +105,7 @@ def main():
 
         print(hands)
 
-        cv2.putText(img,str(int(fps)), (10,70), cv2.FONT_HERSHEY_COMPLEX,2,(0,0,255))
+        cv2.putText(img,f"FPS: {int(fps)}", (10,40), cv2.FONT_HERSHEY_PLAIN,2,(0,0,255))
         cv2.imshow("Hand Tracking", img)
 
         if cv2.waitKey(1) & 0xFF == ord('q'):

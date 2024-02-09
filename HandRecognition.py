@@ -4,6 +4,17 @@ import mediapipe as mp
 import time
 import math
 
+#ADDITIONAL FUNCTIONS
+def transparent_circle(frame,center,radius,color, alpha = 0.5):
+    overlay = frame.copy()
+    
+    cv2.circle(overlay, center, radius, color, -1)
+
+    cv2.addWeighted(overlay, alpha, frame, 1 - alpha, 0, frame)
+
+    return frame
+
+
 #LETS DO IT OOPS STYLE
 class HandDetector():
     def __init__(self,mode=False,numOfHands=2,complexity=1,minConfidence=0.5) -> None:
@@ -50,7 +61,8 @@ class HandDetector():
                             bcUpper = [cx,cy]
 
                         if id in [4,8,12,16,20]:
-                            cv2.circle(img, (cx, cy), 10, color, cv2.FILLED)
+                            cv2.circle(img, (cx, cy), 10, color)
+                            img = transparent_circle(img,(cx,cy),10,color)
 
                 if draw:
                     big_circle_pts, big_circle_radius = (), 0
@@ -68,7 +80,8 @@ class HandDetector():
                         big_circle_radius = int(math.sqrt((bcUpper[1] - bcLower[1])**2 +
                                                     (bcUpper[0] - bcLower[0])**2) // 2) - 4
 
-                    cv2.circle(img, big_circle_pts, big_circle_radius, color, cv2.FILLED)
+                    cv2.circle(img, big_circle_pts, big_circle_radius, color)
+                    img = transparent_circle(img,big_circle_pts,big_circle_radius,color)
 
                 if connections:
 
@@ -97,7 +110,7 @@ def main():
     while True:
         success, img = cap.read()
 
-        hands,img = handsDetector.giveAllPoints(img,(255,0,255),connections=False)
+        hands,img = handsDetector.giveAllPoints(img,(150,10,10),connections=False)
 
         cTime = time.time()
         fps = 1/(cTime-pTime)

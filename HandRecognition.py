@@ -31,7 +31,7 @@ class HandDetector():
         )
 
 
-    def giveAllPoints(self, img, color: tuple = (255,255,255), draw: bool = True,connections: bool = True):
+    def giveAllPoints(self, img, color: tuple = (255,210,0), draw: bool = True,connections: bool = True):
         """
         Will Give All the 21 Points of the hand.
         """
@@ -80,7 +80,7 @@ class HandDetector():
                         big_circle_radius = int(math.sqrt((bcUpper[1] - bcLower[1])**2 +
                                                     (bcUpper[0] - bcLower[0])**2) // 2) - 4
 
-                    cv2.circle(img, big_circle_pts, big_circle_radius, color)
+                    cv2.circle(img, big_circle_pts, big_circle_radius, color,2)
                     img = transparent_circle(img,big_circle_pts,big_circle_radius,color)
 
                 if connections:
@@ -110,7 +110,7 @@ def main():
     while True:
         success, img = cap.read()
 
-        hands,img = handsDetector.giveAllPoints(img,(150,10,10),connections=False)
+        hands,img = handsDetector.giveAllPoints(img,connections=False)
 
         cTime = time.time()
         fps = 1/(cTime-pTime)

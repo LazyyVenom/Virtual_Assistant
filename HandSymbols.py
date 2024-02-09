@@ -7,7 +7,6 @@ import math
 #Importing HandDetector Class
 from HandRecognition import HandDetector
 
-
 if __name__ == '__main__':
     cap = cv2.VideoCapture(0)
 

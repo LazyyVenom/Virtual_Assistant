@@ -18,7 +18,7 @@ def transparent_circle(frame,center,radius,color, alpha = 0.5):
 
 #LETS DO IT OOPS STYLE
 class HandDetector():
-    def __init__(self,mode=False,numOfHands=2,complexity=1,minConfidence=0.6) -> None:
+    def __init__(self,mode=False,numOfHands=2,complexity=1,minConfidence=0.7) -> None:
         self.mode = mode
         self.numOfHands = numOfHands
         self.complexity = complexity
@@ -81,11 +81,10 @@ class HandDetector():
                         big_circle_radius = int(math.sqrt((bcUpper[1] - bcLower[1])**2 +
                                                     (bcUpper[0] - bcLower[0])**2) // 2) - 4
 
-                    cv2.circle(img, big_circle_pts, big_circle_radius*0.9, color,2)
-                    img = transparent_circle(img,big_circle_pts,big_circle_radius*0.9,color)
+                    cv2.circle(img, big_circle_pts, int(big_circle_radius*0.9), color,2)
+                    img = transparent_circle(img,big_circle_pts,int(big_circle_radius*0.9),color)
 
                 if connections:
-
                     self.mpDraws.draw_landmarks(
                             img, hand_landmarks, self.mpHands.HAND_CONNECTIONS)
 
@@ -139,8 +138,6 @@ def main():
         fps = 1/(cTime-pTime)
         pTime = cTime
 
-        # print(hands)
-
         setting = False
 
         if hands:
@@ -161,6 +158,7 @@ def main():
 
         cv2.putText(img,f"FPS:{int(fps)}", (10,40), cv2.FONT_HERSHEY_PLAIN,2,(255,255,255))
         cv2.imshow("Hand Tracking", img)
+        cv2.moveWindow("Hand Tracking", 100, 200)
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
             cap.release()

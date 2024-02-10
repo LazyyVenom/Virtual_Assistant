@@ -94,7 +94,7 @@ class HandDetector():
         return hands,img
 
 
-def recognizeGestures():
+def recognizeGestures(hands : list[list[int]]):
     pass
 
 

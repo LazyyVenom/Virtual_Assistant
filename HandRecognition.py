@@ -93,6 +93,12 @@ class HandDetector():
         return hands,img
 
 
+def recognizeGestures():
+    pass
+
+
+
+
 def main():
     """
     Sample Of How You Should Use These Functions.

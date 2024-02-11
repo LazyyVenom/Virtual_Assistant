@@ -112,7 +112,6 @@ def recognizeFingerJoin(hands : list[list[int]]):
 
 
 
-
 def main():
     """
     Sample Of How You Should Use These Functions.

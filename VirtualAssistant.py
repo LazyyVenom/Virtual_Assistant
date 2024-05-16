@@ -145,8 +145,8 @@ def main():
 
 
         cv2.putText(img,f"FPS:{int(fps)}", (30,30), cv2.FONT_HERSHEY_PLAIN,2,(255,255,255))
-        cv2.imshow("Hand Tracking", img)
-        cv2.moveWindow("Hand Tracking", 100, 200)
+        cv2.imshow("Virtual Assistant", img)
+        cv2.moveWindow("Virtual Assistant", 100, 200)
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
             cap.release()

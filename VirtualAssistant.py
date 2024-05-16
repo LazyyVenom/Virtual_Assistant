@@ -100,48 +100,48 @@ def main():
                 cv2.circle(img,(600,20),10,(0,0,255),cv2.FILLED)
 
         if settingFlag:
-            img = transparent_rectangle(img,5,70,220,230,(25,60,100))
+            img = transparent_rectangle(img,5,70,240,230,(25,60,100))
             if fingers == 1:
-                cv2.putText(img,"Tabs Control", (10,100),cv2.FONT_HERSHEY_PLAIN,2,color=(255,0,0))
-                cv2.putText(img,"Settings", (10,130),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"Settings", (10,160),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"Settings", (10,190),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"Settings", (10,220),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
+                cv2.putText(img,"Volume", (10,100),cv2.FONT_HERSHEY_PLAIN,2,color=(255,0,0))
+                cv2.putText(img,"Brightness", (10,130),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
+                cv2.putText(img,"IronMan Mode", (10,160),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
+                cv2.putText(img,"PC Settings", (10,190),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
+                cv2.putText(img,"File Manager", (10,220),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
             
             elif fingers == 2:
-                cv2.putText(img,"Tabs Control", (10,100),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"Settings", (10,130),cv2.FONT_HERSHEY_PLAIN,2,color=(255,0,0))
-                cv2.putText(img,"Settings", (10,160),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"Settings", (10,190),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"Settings", (10,220),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
+                cv2.putText(img,"Volume", (10,100),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
+                cv2.putText(img,"Brightness", (10,130),cv2.FONT_HERSHEY_PLAIN,2,color=(255,0,0))
+                cv2.putText(img,"IronMan Mode", (10,160),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
+                cv2.putText(img,"PC Settings", (10,190),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
+                cv2.putText(img,"File Manager", (10,220),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
             
             elif fingers == 3:
-                cv2.putText(img,"Tabs Control", (10,100),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"Settings", (10,130),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"Settings", (10,160),cv2.FONT_HERSHEY_PLAIN,2,color=(255,0,0))
-                cv2.putText(img,"Settings", (10,190),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"Settings", (10,220),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
+                cv2.putText(img,"Volume", (10,100),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
+                cv2.putText(img,"Brightness", (10,130),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
+                cv2.putText(img,"IronMan Mode", (10,160),cv2.FONT_HERSHEY_PLAIN,2,color=(255,0,0))
+                cv2.putText(img,"PC Settings", (10,190),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
+                cv2.putText(img,"File Manager", (10,220),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
             
             elif fingers == 4:
-                cv2.putText(img,"Tabs Control", (10,100),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"Settings", (10,130),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"Settings", (10,160),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"Settings", (10,190),cv2.FONT_HERSHEY_PLAIN,2,color=(255,0,0))
-                cv2.putText(img,"Settings", (10,220),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
+                cv2.putText(img,"Volume", (10,100),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
+                cv2.putText(img,"Brightness", (10,130),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
+                cv2.putText(img,"IronMan Mode", (10,160),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
+                cv2.putText(img,"PC Settings", (10,190),cv2.FONT_HERSHEY_PLAIN,2,color=(255,0,0))
+                cv2.putText(img,"File Manager", (10,220),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
             
             elif fingers == 5:
-                cv2.putText(img,"Tabs Control", (10,100),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"Settings", (10,130),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"Settings", (10,160),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"Settings", (10,190),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"Settings", (10,220),cv2.FONT_HERSHEY_PLAIN,2,color=(255,0,0))
+                cv2.putText(img,"Volume", (10,100),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
+                cv2.putText(img,"Brightness", (10,130),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
+                cv2.putText(img,"IronMan Mode", (10,160),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
+                cv2.putText(img,"PC Settings", (10,190),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
+                cv2.putText(img,"File Manager", (10,220),cv2.FONT_HERSHEY_PLAIN,2,color=(255,0,0))
             
             else:
-                cv2.putText(img,"Tabs Control", (10,100),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"Settings", (10,130),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"Settings", (10,160),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"Settings", (10,190),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"Settings", (10,220),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
+                cv2.putText(img,"Volume", (10,100),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
+                cv2.putText(img,"Brightness", (10,130),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
+                cv2.putText(img,"IronMan Mode", (10,160),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
+                cv2.putText(img,"PC Settings", (10,190),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
+                cv2.putText(img,"File Manager", (10,220),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
 
 
         cv2.putText(img,f"FPS:{int(fps)}", (30,30), cv2.FONT_HERSHEY_PLAIN,2,(255,255,255))

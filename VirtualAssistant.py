@@ -15,7 +15,7 @@ def recognizeFingerJoin(hands : list[list[int]]) -> bool:
         neededPoints = [4,8,12,16,20]
         for neededPoint in neededPoints:
             for neededPoint2 in neededPoints:
-                if abs(hand[neededPoint][2] - hand[neededPoint2][2]) < 20:
+                if abs(hand[neededPoint][2] - hand[neededPoint2][2]) < 20 and abs(hand[neededPoint][1] - hand[neededPoint2][1]) < 45:
                     continue
                 else:
                     settingFlag = False

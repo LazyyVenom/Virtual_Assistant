@@ -62,7 +62,7 @@ def volume():
 def brightness():
     print("Brightness")
 
-def ironman_mode():
+def iron_man_mode():
     print("IronMan Mode")
 
 def pc_settings():
@@ -144,7 +144,7 @@ def main():
                 sub_toggleTimer += 1 / fps
                 if sub_toggleTimer >= 1:
                     sub_toggleTimer = 0
-                    ironman_mode()
+                    iron_man_mode()
 
                 cv2.putText(img,"Volume", (10,100),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
                 cv2.putText(img,"Brightness", (10,130),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))

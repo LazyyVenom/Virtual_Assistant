@@ -56,6 +56,20 @@ def countFingers(hands : list[list[int]]) -> int:
 
     return fingers
 
+def volume():
+    print("Volume")
+
+def brightness():
+    print("Brightness")
+
+def ironman_mode():
+    print("IronMan Mode")
+
+def pc_settings():
+    print("PC Settings")
+
+def file_manager():
+    print("File Manager")
 
 def main():
     """

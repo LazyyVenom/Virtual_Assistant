@@ -73,6 +73,7 @@ def main():
 
     settingFlag = False
     toggleTimer = 0
+    sub_toggleTimer = 0
     while True:
         _, img = cap.read()
 
@@ -102,6 +103,11 @@ def main():
         if settingFlag:
             img = transparent_rectangle(img,5,70,240,230,(25,60,100))
             if fingers == 1:
+                sub_toggleTimer += 1 / fps
+                if sub_toggleTimer >= 1:
+                    sub_toggleTimer = 0
+                    volume()
+
                 cv2.putText(img,"Volume", (10,100),cv2.FONT_HERSHEY_PLAIN,2,color=(255,0,0))
                 cv2.putText(img,"Brightness", (10,130),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
                 cv2.putText(img,"IronMan Mode", (10,160),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
@@ -109,6 +115,11 @@ def main():
                 cv2.putText(img,"File Manager", (10,220),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
             
             elif fingers == 2:
+                sub_toggleTimer += 1 / fps
+                if sub_toggleTimer >= 1:
+                    sub_toggleTimer = 0
+                    brightness()
+
                 cv2.putText(img,"Volume", (10,100),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
                 cv2.putText(img,"Brightness", (10,130),cv2.FONT_HERSHEY_PLAIN,2,color=(255,0,0))
                 cv2.putText(img,"IronMan Mode", (10,160),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
@@ -116,6 +127,11 @@ def main():
                 cv2.putText(img,"File Manager", (10,220),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
             
             elif fingers == 3:
+                sub_toggleTimer += 1 / fps
+                if sub_toggleTimer >= 1:
+                    sub_toggleTimer = 0
+                    ironman_mode()
+
                 cv2.putText(img,"Volume", (10,100),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
                 cv2.putText(img,"Brightness", (10,130),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
                 cv2.putText(img,"IronMan Mode", (10,160),cv2.FONT_HERSHEY_PLAIN,2,color=(255,0,0))
@@ -123,6 +139,11 @@ def main():
                 cv2.putText(img,"File Manager", (10,220),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
             
             elif fingers == 4:
+                sub_toggleTimer += 1 / fps
+                if sub_toggleTimer >= 1:
+                    sub_toggleTimer = 0
+                    pc_settings()
+
                 cv2.putText(img,"Volume", (10,100),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
                 cv2.putText(img,"Brightness", (10,130),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
                 cv2.putText(img,"IronMan Mode", (10,160),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
@@ -130,6 +151,11 @@ def main():
                 cv2.putText(img,"File Manager", (10,220),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
             
             elif fingers == 5:
+                sub_toggleTimer += 1 / fps
+                if sub_toggleTimer >= 1:
+                    sub_toggleTimer = 0
+                    file_manager()
+
                 cv2.putText(img,"Volume", (10,100),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
                 cv2.putText(img,"Brightness", (10,130),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
                 cv2.putText(img,"IronMan Mode", (10,160),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
@@ -137,6 +163,8 @@ def main():
                 cv2.putText(img,"File Manager", (10,220),cv2.FONT_HERSHEY_PLAIN,2,color=(255,0,0))
             
             else:
+                sub_toggleTimer = 0
+
                 cv2.putText(img,"Volume", (10,100),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
                 cv2.putText(img,"Brightness", (10,130),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
                 cv2.putText(img,"IronMan Mode", (10,160),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))

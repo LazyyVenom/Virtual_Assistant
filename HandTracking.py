@@ -18,7 +18,7 @@ def transparent_circle(frame,center,radius,color, alpha = 0.5):
 
 #LETS DO IT OOPS STYLE
 class HandDetector():
-    def __init__(self,mode=False,numOfHands=2,complexity=1,minConfidence=0.5) -> None:
+    def __init__(self,mode=False,numOfHands=2,complexity=1,minConfidence=0.7) -> None:
         self.mode = mode
         self.numOfHands = numOfHands
         self.complexity = complexity
@@ -81,11 +81,10 @@ class HandDetector():
                         big_circle_radius = int(math.sqrt((bcUpper[1] - bcLower[1])**2 +
                                                     (bcUpper[0] - bcLower[0])**2) // 2) - 4
 
-                    cv2.circle(img, big_circle_pts, big_circle_radius, color,2)
-                    img = transparent_circle(img,big_circle_pts,big_circle_radius,color)
+                    cv2.circle(img, big_circle_pts, int(big_circle_radius*0.9), color,2)
+                    img = transparent_circle(img,big_circle_pts,int(big_circle_radius*0.9),color)
 
                 if connections:
-
                     self.mpDraws.draw_landmarks(
                             img, hand_landmarks, self.mpHands.HAND_CONNECTIONS)
 
@@ -94,9 +93,22 @@ class HandDetector():
         return hands,img
 
 
-def recognizeGestures(hands : list[list[int]]):
-    pass
+def recognizeFingerJoin(hands : list[list[int]]):
+    #OPENING/CLOSING OPTIONS 
+    settingFlag = True
+    for hand in hands:
+        neededPoints = [4,8,12,16,20]
+        for neededPoint in neededPoints:
+            for neededPoint2 in neededPoints:
+                if abs(hand[neededPoint][2] - hand[neededPoint2][2]) < 20:
+                    continue
+                else:
+                    settingFlag = False
+        
+    if settingFlag:
+        return True
 
+    return False
 
 
 
@@ -114,8 +126,10 @@ def main():
     pTime = 0
     cTime = 0
 
+    settingFlag = False
+    toggleTimer = 0
     while True:
-        success, img = cap.read()
+        _, img = cap.read()
 
         hands,img = handsDetector.giveAllPoints(img,connections=False)
 
@@ -123,10 +137,27 @@ def main():
         fps = 1/(cTime-pTime)
         pTime = cTime
 
-        print(hands)
+        setting = False
 
-        cv2.putText(img,f"FPS: {int(fps)}", (10,40), cv2.FONT_HERSHEY_PLAIN,2,(0,0,255))
+        if hands:
+            setting = recognizeFingerJoin(hands)
+
+        toggleTimer += 1 / fps
+
+        if setting and toggleTimer >= 3:
+            settingFlag = not settingFlag
+            toggleTimer = 0
+            if settingFlag:
+                cv2.circle(img,(600,20),10,(0,255,0),cv2.FILLED)
+            else:
+                cv2.circle(img,(600,20),10,(0,0,255),cv2.FILLED)
+
+        if settingFlag:
+            cv2.putText(img,"Settings", (100,100),cv2.FONT_HERSHEY_COMPLEX,2,color=(0,255,0))
+
+        cv2.putText(img,f"FPS:{int(fps)}", (10,40), cv2.FONT_HERSHEY_PLAIN,2,(255,255,255))
         cv2.imshow("Hand Tracking", img)
+        cv2.moveWindow("Hand Tracking", 100, 200)
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
             cap.release()

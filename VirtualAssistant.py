@@ -6,7 +6,7 @@ import math
 
 
 #Importing Hand Detector And Additional Functions
-from HandRecognition import HandDetector
+from HandTracking import HandDetector
 
 def recognizeFingerJoin(hands : list[list[int]]) -> bool: 
     #OPENING/CLOSING OPTIONS 

@@ -1,2 +1,2 @@
-# Virtual_Assistant
-Creating a Virtual Assistant with voice and gestures control using implementation of ML and DL models along with LLM models.
+# Virtual_Assistant - Sasta Tony Stark
+Plan Changed now creating only gestures based Assitant for now.

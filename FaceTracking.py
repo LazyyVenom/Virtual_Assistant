@@ -125,15 +125,64 @@ with mp_face_detection.FaceDetection(
                 rotation_turn3 += 1
                 rotation_turn3 = rotation_turn3 % 20
 
+                selected = 4
+
                 # Option 1
                 image = option_generator(
                     image,
-                    (int(eyes[0].x * iw) - 100, int(eyes[0].y * ih) - 100),
-                    num=1,
+                    (int(eyes[0].x * iw) - 80, int(eyes[0].y * ih) - 90),
+                    text="G",
                     radius=int(30 * scale),
+                    color=(100, 200, 0) if selected == 1 else (255, 210, 0),
+                )
+
+                # Option 2
+                image = option_generator(
+                    image,
+                    (int(eyes[0].x * iw) - 30, int(eyes[0].y * ih) - 130),
+                    text="C",
+                    radius=int(30 * scale),
+                    color=(100, 200, 0) if selected == 2 else (255, 210, 0),
+                )
+
+                # Option 3
+                image = option_generator(
+                    image,
+                    (int(eyes[0].x * iw) + 30, int(eyes[0].y * ih) - 140),
+                    text="V",
+                    radius=int(30 * scale),
+                    color=(100, 200, 0) if selected == 3 else (255, 210, 0),
+                )
+
+                # Option 4
+                image = option_generator(
+                    image,
+                    (int(eyes[0].x * iw) + 90, int(eyes[0].y * ih) - 130),
+                    text="B",
+                    radius=int(30 * scale),
+                    color=(100, 200, 0) if selected == 4 else (255, 210, 0),
+                )
+
+                # Option 5
+                image = option_generator(
+                    image,
+                    (int(eyes[0].x * iw) + 140, int(eyes[0].y * ih) - 90),
+                    text="S",
+                    radius=int(30 * scale),
+                    color=(100, 200, 0) if selected == 5 else (255, 210, 0),
                 )
 
                 # image = show_random_numbers_on_frame(image,100)
+                cv2.putText(
+                    image,
+                    "G - Gestures Controlling, C - Game Control, V - Volume, B - Brightness, S - ScreenShot",
+                    (7,25),
+                    cv2.FONT_HERSHEY_SIMPLEX,
+                    0.42,
+                    (200, 130, 0),
+                    1,
+                    cv2.LINE_AA,
+                )
 
         cv2.imshow("Trying Filter", image)
         if cv2.waitKey(5) & 0xFF == 27:

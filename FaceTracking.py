@@ -4,6 +4,7 @@ from additional_functions import (
     transparent_circle_boundary,
     transparent_sector,
     transparent_line,
+    show_random_numbers_on_frame
 )
 
 mp_face_detection = mp.solutions.face_detection
@@ -57,24 +58,6 @@ with mp_face_detection.FaceDetection(
                     alpha=0.1,
                     boundary=5,
                 )
-
-                # image = transparent_line(
-                #     image,
-                #     (int(eyes[0].x * iw), int(eyes[0].y * ih) - int(25 * scale)),
-                #     (int(eyes[0].x * iw), int(eyes[0].y * ih) + int(25 * scale)),
-                #     color,
-                #     5,
-                #     0.5,
-                # )
-
-                # image = transparent_line(
-                #     image,
-                #     (int(eyes[0].x * iw) + int(25 * scale), int(eyes[0].y * ih)),
-                #     (int(eyes[0].x * iw) - int(25 * scale), int(eyes[0].y * ih)),
-                #     color,
-                #     5,
-                #     0.5,
-                # )
 
                 image = transparent_sector(
                     image,
@@ -142,6 +125,8 @@ with mp_face_detection.FaceDetection(
                 rotation_turn2 = rotation_turn2 if rotation_turn2 > 0 else 16
                 rotation_turn3 += 1
                 rotation_turn3 = rotation_turn3 % 20
+
+                # image = show_random_numbers_on_frame(image,10)
 
         cv2.imshow("Trying Filter", image)
         if cv2.waitKey(5) & 0xFF == 27:

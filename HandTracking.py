@@ -5,26 +5,6 @@ import time
 import math
 
 
-#ADDITIONAL FUNCTIONS
-def transparent_circle(frame,center,radius,color, alpha = 0.5):
-    overlay = frame.copy()
-    
-    cv2.circle(overlay, center, radius, color, -1)
-
-    cv2.addWeighted(overlay, alpha, frame, 1 - alpha, 0, frame)
-
-    return frame
-
-def transparent_circle_boundary(frame,center,radius,color, alpha = 0.5,boundary=5):
-    overlay = frame.copy()
-    
-    cv2.circle(overlay, center, radius, color, boundary)
-
-    cv2.addWeighted(overlay, alpha, frame, 1 - alpha, 0, frame)
-
-    return frame
-
-
 #LETS DO IT OOPS STYLE
 class HandDetector():
     def __init__(self,mode=False,numOfHands=2,complexity=1,minConfidence=0.7) -> None:

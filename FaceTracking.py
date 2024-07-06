@@ -2,9 +2,7 @@ import cv2
 import mediapipe as mp
 from additional_functions import (
     transparent_circle_boundary,
-    transparent_sector,
-    transparent_line,
-    show_random_numbers_on_frame
+    transparent_sector
 )
 
 mp_face_detection = mp.solutions.face_detection
@@ -126,7 +124,9 @@ with mp_face_detection.FaceDetection(
                 rotation_turn3 += 1
                 rotation_turn3 = rotation_turn3 % 20
 
-                # image = show_random_numbers_on_frame(image,10)
+
+
+                # image = show_random_numbers_on_frame(image,100) 
 
         cv2.imshow("Trying Filter", image)
         if cv2.waitKey(5) & 0xFF == 27:

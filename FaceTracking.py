@@ -35,19 +35,20 @@ with mp_face_detection.FaceDetection(model_selection=1, min_detection_confidence
                 radius = int(min(width, height) / 2)
                 
                 # Draw a circle around the face
-                cv2.circle(image, (center_x, center_y), radius, (0, 255, 0), 2)
+                cv2.circle(image, (center_x, center_y - 20), radius, (0, 255, 0), 2)
                 
-                # Draw key points
-                for keypoint in detection.location_data.relative_keypoints:
-                    keypoint_x = int(keypoint.x * iw)
-                    keypoint_y = int(keypoint.y * ih)
-                    cv2.circle(image, (keypoint_x, keypoint_y), 5, (0, 0, 255), -1)
+                scale = radius / 90
 
-                # Optionally, put a label with detection confidence
+                keypoints = list(detection.location_data.relative_keypoints)
+                
+                eyes = (keypoints[0],keypoints[1])
+
+                cv2.circle(image, (int(eyes[0].x * iw), int(eyes[0].y * ih)), int(25*scale), (0,255,255), 5)
+                cv2.circle(image, (int(eyes[1].x * iw), int(eyes[1].y * ih)), int(25*scale), (255,0,255), 5)
+
                 cv2.putText(image, f'{int(detection.score[0] * 100)}%', (xmin, ymin - 10),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
-        # Flip the image horizontally for a selfie-view display.
         cv2.imshow('MediaPipe Face Detection',image)
         if cv2.waitKey(5) & 0xFF == 27:
             break

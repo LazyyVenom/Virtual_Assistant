@@ -10,7 +10,9 @@ with mp_face_detection.FaceDetection(
     model_selection=1, min_detection_confidence=0.4
 ) as face_detection:
     
-    rotation_turn = 0
+    rotation_turn1 = 0
+    rotation_turn2 = 8
+    rotation_turn3 = 0
 
     while cap.isOpened():
         success, image = cap.read()
@@ -51,8 +53,8 @@ with mp_face_detection.FaceDetection(
                     ((int(eyes[0].x * iw), int(eyes[0].y * ih))),
                     int(25 * scale),
                     color,
-                    alpha=0.3,
-                    boundary=10,
+                    alpha=0.1,
+                    boundary=5,
                 )
 
                 image = transparent_sector(
@@ -60,22 +62,67 @@ with mp_face_detection.FaceDetection(
                     ((int(eyes[0].x * iw), int(eyes[0].y * ih))),
                     int(25 * scale),
                     color,
-                    rotation_turn*30,
-                    alpha=0.5,
-                    thickness=12,
+                    rotation_turn1*15,
+                    12,
+                    alpha=0.7,
+                    thickness=5,
                 )
 
-                rotation_turn += 1
-                rotation_turn = rotation_turn % 12
+                image = transparent_circle_boundary(
+                    image,
+                    ((int(eyes[0].x * iw), int(eyes[0].y * ih))),
+                    int(36 * scale),
+                    color,
+                    alpha=0.1,
+                    boundary=5,
+                )
 
-                # image = transparent_circle_boundary(
-                #     image,
-                #     ((int(eyes[1].x * iw), int(eyes[1].y * ih))),
-                #     int(25 * scale),
-                #     color,
-                #     alpha=0.3,
-                #     boundary=10,
-                # )
+                image = transparent_sector(
+                    image,
+                    ((int(eyes[0].x * iw), int(eyes[0].y * ih))),
+                    int(36 * scale),
+                    color,
+                    rotation_turn2*23,
+                    10,
+                    alpha=0.7,
+                    thickness=5,
+                )
+
+                image = transparent_circle_boundary(
+                    image,
+                    ((int(eyes[0].x * iw), int(eyes[0].y * ih))),
+                    int(47 * scale),
+                    color,
+                    alpha=0.06,
+                    boundary=-1,
+                )
+
+                image = transparent_circle_boundary(
+                    image,
+                    ((int(eyes[0].x * iw), int(eyes[0].y * ih))),
+                    int(47 * scale),
+                    color,
+                    alpha=0.1,
+                    boundary=5,
+                )
+
+                image = transparent_sector(
+                    image,
+                    ((int(eyes[0].x * iw), int(eyes[0].y * ih))),
+                    int(47 * scale),
+                    color,
+                    rotation_turn3*18,
+                    8,
+                    alpha=0.7,
+                    thickness=5,
+                )
+
+                rotation_turn1 += 1
+                rotation_turn1 = rotation_turn1 % 24
+                rotation_turn2 -= 1
+                rotation_turn2 = rotation_turn2 if rotation_turn2 > 0 else 16
+                rotation_turn3 += 1
+                rotation_turn3 = rotation_turn3 % 20
 
         cv2.imshow("Trying Filter", image)
         if cv2.waitKey(5) & 0xFF == 27:

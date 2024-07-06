@@ -38,7 +38,7 @@ with mp_face_detection.FaceDetection(
                 center_x, center_y = int(xmin + width / 2), int(ymin + height / 2)
                 radius = int(min(width, height) / 2)
 
-                # cv2.circle(image, (center_x, center_y - 20), radius, (0, 255, 0), 2)
+                cv2.circle(image, (center_x, center_y - 20), radius, (0, 255, 0), 2)
 
                 scale = radius / 90
 
@@ -63,7 +63,7 @@ with mp_face_detection.FaceDetection(
                     int(25 * scale),
                     color,
                     rotation_turn1*15,
-                    12,
+                    9,
                     alpha=0.7,
                     thickness=5,
                 )

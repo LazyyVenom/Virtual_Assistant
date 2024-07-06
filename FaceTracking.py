@@ -1,6 +1,10 @@
 import cv2
 import mediapipe as mp
-from additional_functions import transparent_circle_boundary, transparent_sector
+from additional_functions import (
+    transparent_circle_boundary,
+    transparent_sector,
+    transparent_line,
+)
 
 mp_face_detection = mp.solutions.face_detection
 mp_drawing = mp.solutions.drawing_utils
@@ -9,7 +13,7 @@ cap = cv2.VideoCapture(0)
 with mp_face_detection.FaceDetection(
     model_selection=1, min_detection_confidence=0.4
 ) as face_detection:
-    
+
     rotation_turn1 = 0
     rotation_turn2 = 8
     rotation_turn3 = 0
@@ -37,16 +41,13 @@ with mp_face_detection.FaceDetection(
 
                 center_x, center_y = int(xmin + width / 2), int(ymin + height / 2)
                 radius = int(min(width, height) / 2)
-
-                cv2.circle(image, (center_x, center_y - 20), radius, (0, 255, 0), 2)
+                color = (255, 210, 0)
 
                 scale = radius / 90
 
                 keypoints = list(detection.location_data.relative_keypoints)
 
                 eyes = (keypoints[0], keypoints[1])
-
-                color = (255, 210, 0)
 
                 image = transparent_circle_boundary(
                     image,
@@ -57,12 +58,30 @@ with mp_face_detection.FaceDetection(
                     boundary=5,
                 )
 
+                # image = transparent_line(
+                #     image,
+                #     (int(eyes[0].x * iw), int(eyes[0].y * ih) - int(25 * scale)),
+                #     (int(eyes[0].x * iw), int(eyes[0].y * ih) + int(25 * scale)),
+                #     color,
+                #     5,
+                #     0.5,
+                # )
+
+                # image = transparent_line(
+                #     image,
+                #     (int(eyes[0].x * iw) + int(25 * scale), int(eyes[0].y * ih)),
+                #     (int(eyes[0].x * iw) - int(25 * scale), int(eyes[0].y * ih)),
+                #     color,
+                #     5,
+                #     0.5,
+                # )
+
                 image = transparent_sector(
                     image,
                     ((int(eyes[0].x * iw), int(eyes[0].y * ih))),
                     int(25 * scale),
                     color,
-                    rotation_turn1*15,
+                    rotation_turn1 * 15,
                     9,
                     alpha=0.7,
                     thickness=5,
@@ -82,7 +101,7 @@ with mp_face_detection.FaceDetection(
                     ((int(eyes[0].x * iw), int(eyes[0].y * ih))),
                     int(36 * scale),
                     color,
-                    rotation_turn2*23,
+                    rotation_turn2 * 23,
                     10,
                     alpha=0.7,
                     thickness=5,
@@ -111,7 +130,7 @@ with mp_face_detection.FaceDetection(
                     ((int(eyes[0].x * iw), int(eyes[0].y * ih))),
                     int(47 * scale),
                     color,
-                    rotation_turn3*18,
+                    rotation_turn3 * 18,
                     8,
                     alpha=0.7,
                     thickness=5,

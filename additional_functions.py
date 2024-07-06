@@ -20,6 +20,16 @@ def transparent_sector(frame,center,radius,color,angle_start,divisions,alpha = 0
     return frame
 
 
+def transparent_line(frame,p1,p2,color,thickness,alpha):
+    overlay = frame.copy()
+
+    cv2.line(overlay,p1,p2,color,thickness)
+
+    cv2.addWeighted(overlay,alpha,frame,1-alpha,0,frame)
+
+    return frame
+
+
 def transparent_circle_boundary(frame,center,radius,color, alpha = 0.5,boundary=5):
     overlay = frame.copy()
     

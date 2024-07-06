@@ -4,6 +4,8 @@ import mediapipe as mp
 import time
 import math
 
+from additional_functions import transparent_circle
+
 
 #LETS DO IT OOPS STYLE
 class HandDetector():

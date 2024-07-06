@@ -1,6 +1,6 @@
 import cv2
 import mediapipe as mp
-from HandTracking import transparent_circle_boundary
+from additional_functions import transparent_circle_boundary,transparent_circle
 
 mp_face_detection = mp.solutions.face_detection
 mp_drawing = mp.solutions.drawing_utils

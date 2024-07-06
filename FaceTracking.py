@@ -25,11 +25,17 @@ with mp_face_detection.FaceDetection(model_selection=1, min_detection_confidence
                 # Extract the bounding box
                 bboxC = detection.location_data.relative_bounding_box
                 ih, iw, _ = image.shape
-                bbox = int(bboxC.xmin * iw), int(bboxC.ymin * ih), \
-                       int(bboxC.width * iw), int(bboxC.height * ih)
+                xmin = int(bboxC.xmin * iw)
+                ymin = int(bboxC.ymin * ih)
+                width = int(bboxC.width * iw)
+                height = int(bboxC.height * ih)
                 
-                # Draw a custom rectangle around the face
-                cv2.rectangle(image, bbox, (0, 255, 0), 2)
+                # Calculate center and radius for the circle
+                center_x, center_y = int(xmin + width / 2), int(ymin + height / 2)
+                radius = int(min(width, height) / 2)
+                
+                # Draw a circle around the face
+                cv2.circle(image, (center_x, center_y), radius, (0, 255, 0), 2)
                 
                 # Draw key points
                 for keypoint in detection.location_data.relative_keypoints:
@@ -38,12 +44,13 @@ with mp_face_detection.FaceDetection(model_selection=1, min_detection_confidence
                     cv2.circle(image, (keypoint_x, keypoint_y), 5, (0, 0, 255), -1)
 
                 # Optionally, put a label with detection confidence
-                cv2.putText(image, f'{int(detection.score[0] * 100)}%', (bbox[0], bbox[1] - 10),
+                cv2.putText(image, f'{int(detection.score[0] * 100)}%', (xmin, ymin - 10),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
         # Flip the image horizontally for a selfie-view display.
-        cv2.imshow('MediaPipe Face Detection', image)
+        cv2.imshow('MediaPipe Face Detection',image)
         if cv2.waitKey(5) & 0xFF == 27:
             break
+        
 cap.release()
 cv2.destroyAllWindows()

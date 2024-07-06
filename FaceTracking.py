@@ -1,5 +1,6 @@
 import cv2
 import mediapipe as mp
+from HandTracking import transparent_circle_boundary
 
 mp_face_detection = mp.solutions.face_detection
 mp_drawing = mp.solutions.drawing_utils
@@ -37,13 +38,12 @@ with mp_face_detection.FaceDetection(model_selection=1, min_detection_confidence
                 
                 eyes = (keypoints[0],keypoints[1])
 
-                cv2.circle(image, (int(eyes[0].x * iw), int(eyes[0].y * ih)), int(25*scale), (0,255,255), 5)
-                cv2.circle(image, (int(eyes[1].x * iw), int(eyes[1].y * ih)), int(25*scale), (255,0,255), 5)
+                color = (255,210,0)
 
-                cv2.putText(image, f'{int(detection.score[0] * 100)}%', (xmin, ymin - 10),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+                image = transparent_circle_boundary(image,((int(eyes[0].x * iw),int(eyes[0].y * ih))),int(25*scale),color,alpha=0.3,boundary=10)
+                image = transparent_circle_boundary(image,((int(eyes[1].x * iw),int(eyes[1].y * ih))),int(25*scale),color,alpha=0.3,boundary=10)
 
-        cv2.imshow('MediaPipe Face Detection',image)
+        cv2.imshow('Trying Filter',image)
         if cv2.waitKey(5) & 0xFF == 27:
             break
         

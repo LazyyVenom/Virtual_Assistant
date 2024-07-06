@@ -59,3 +59,13 @@ def show_random_numbers_on_frame(frame, num_numbers, color=(255, 210, 0)):
     blended_frame = cv2.addWeighted(older_frame, 0.6, frame, 0.4, 0)
 
     return blended_frame
+
+
+def option_generator(frame,center,num,radius,color=(255, 210, 0)):
+    frame = transparent_circle(frame,center,radius,color)
+    font = cv2.FONT_HERSHEY_SIMPLEX
+    font_scale = 1
+    thickness = 2
+    cv2.putText(frame, str(num), (center[0]-10, center[1]+10), font, font_scale, (255, 230, 20), thickness, cv2.LINE_AA)
+    return frame
+    

@@ -18,6 +18,7 @@ with mp_face_detection.FaceDetection(model_selection=1, min_detection_confidence
 
         image.flags.writeable = True
         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+        
         if results.detections:
             for detection in results.detections:
                 bboxC = detection.location_data.relative_bounding_box

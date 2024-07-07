@@ -140,7 +140,7 @@ with mp_face_detection.FaceDetection(
                 image = option_generator(
                     image,
                     (int(eyes[0].x * iw) - 30, int(eyes[0].y * ih) - 130),
-                    text="C",
+                    text="R",
                     radius=int(30 * scale),
                     color=(100, 200, 0) if selected == 2 else (255, 210, 0),
                 )
@@ -175,7 +175,7 @@ with mp_face_detection.FaceDetection(
                 # image = show_random_numbers_on_frame(image,100)
                 cv2.putText(
                     image,
-                    "G - Gestures Controlling, C - Game Control, V - Volume, B - Brightness, S - ScreenShot",
+                    "G - Gestures Controlling, R - Game Remote, V - Volume, B - Brightness, S - ScreenShot",
                     (7,25),
                     cv2.FONT_HERSHEY_SIMPLEX,
                     0.42,

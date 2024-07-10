@@ -6,6 +6,7 @@ from additional_functions import (
     option_generator,
 )
 
+
 mp_face_detection = mp.solutions.face_detection
 mp_drawing = mp.solutions.drawing_utils
 

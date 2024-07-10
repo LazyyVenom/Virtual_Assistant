@@ -10,6 +10,10 @@ mp_face_detection = mp.solutions.face_detection
 mp_drawing = mp.solutions.drawing_utils
 
 cap = cv2.VideoCapture(0)
+
+def face_filter(selected:int):
+    pass
+
 with mp_face_detection.FaceDetection(
     model_selection=1, min_detection_confidence=0.4
 ) as face_detection:

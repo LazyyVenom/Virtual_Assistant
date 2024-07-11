@@ -9,11 +9,10 @@ from additional_functions import (
 mp_face_detection = mp.solutions.face_detection
 mp_drawing = mp.solutions.drawing_utils
 
-def face_filter(face_detection, selected: int, image, setting_toggle):
+def face_filter(face_detection, selected: int, image, setting_toggle,rotations):
     """
     To Apply Face Filter Image.
     """
-    global rotation_turn1,rotation_turn2,rotation_turn3
     image.flags.writeable = False
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     results = face_detection.process(image)
@@ -30,7 +29,7 @@ def face_filter(face_detection, selected: int, image, setting_toggle):
             width = int(bboxC.width * iw)
             height = int(bboxC.height * ih)
 
-            global rotation_turn1, rotation_turn2, rotation_turn3
+            rotation_turn1,rotation_turn2,rotation_turn3 = rotations
 
             center_x, center_y = int(xmin + width / 2), int(ymin + height / 2)
             radius = int(min(width, height) / 2)
@@ -178,7 +177,7 @@ def face_filter(face_detection, selected: int, image, setting_toggle):
                     cv2.LINE_AA,
                 )
 
-            return image
+            return image,rotation_turn1,rotation_turn2,rotation_turn3
     return None  # Return None if no detections
 
 if __name__ == '__main__':
@@ -196,7 +195,7 @@ if __name__ == '__main__':
         if not success:
             continue
 
-        image = face_filter(face_detection, 2, image,False)
+        image,rotation_turn1,rotation_turn2,rotation_turn3 = face_filter(face_detection, 2, image,False,(rotation_turn1,rotation_turn2,rotation_turn3))
 
         if image is not None and image.size != 0:
             cv2.imshow("Trying Filter", image)

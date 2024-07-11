@@ -134,93 +134,98 @@ def main():
             else:
                 cv2.circle(img, (600, 20), 10, (0, 0, 255), cv2.FILLED)
 
-        if settingFlag:
-            if fingers == 1:
-                sub_toggleTimer += 1 / fps
-                if sub_toggleTimer >= 2:
+        try:
+            if settingFlag:
+                if fingers == 1:
+                    sub_toggleTimer += 1 / fps
+                    if sub_toggleTimer >= 2:
+                        sub_toggleTimer = 0
+                        gestures_control()
+
+                    img, rotation_turn1, rotation_turn2, rotation_turn3 = face_filter(
+                        face_detection,
+                        1,
+                        img,
+                        True,
+                        (rotation_turn1, rotation_turn2, rotation_turn3),
+                    )
+
+                elif fingers == 2:
+                    sub_toggleTimer += 1 / fps
+                    if sub_toggleTimer >= 2:
+                        sub_toggleTimer = 0
+                        game_remote()
+
+                    img, rotation_turn1, rotation_turn2, rotation_turn3 = face_filter(
+                        face_detection,
+                        2,
+                        img,
+                        True,
+                        (rotation_turn1, rotation_turn2, rotation_turn3),
+                    )
+
+                elif fingers == 3:
+                    sub_toggleTimer += 1 / fps
+                    if sub_toggleTimer >= 2:
+                        sub_toggleTimer = 0
+                        volume()
+
+                    img, rotation_turn1, rotation_turn2, rotation_turn3 = face_filter(
+                        face_detection,
+                        3,
+                        img,
+                        True,
+                        (rotation_turn1, rotation_turn2, rotation_turn3),
+                    )
+
+                elif fingers == 4:
+                    sub_toggleTimer += 1 / fps
+                    if sub_toggleTimer >= 2:
+                        sub_toggleTimer = 0
+                        brightness()
+
+                    img, rotation_turn1, rotation_turn2, rotation_turn3 = face_filter(
+                        face_detection,
+                        4,
+                        img,
+                        True,
+                        (rotation_turn1, rotation_turn2, rotation_turn3),
+                    )
+
+                elif fingers == 5:
+                    sub_toggleTimer += 1 / fps
+                    if sub_toggleTimer >= 2:
+                        sub_toggleTimer = 0
+                        screenshot()
+
+                    img, rotation_turn1, rotation_turn2, rotation_turn3 = face_filter(
+                        face_detection,
+                        5,
+                        img,
+                        True,
+                        (rotation_turn1, rotation_turn2, rotation_turn3),
+                    )
+
+                else:
                     sub_toggleTimer = 0
-                    gestures_control()
 
-                img, rotation_turn1, rotation_turn2, rotation_turn3 = face_filter(
-                    face_detection,
-                    1,
-                    img,
-                    True,
-                    (rotation_turn1, rotation_turn2, rotation_turn3),
-                )
+                    img, rotation_turn1, rotation_turn2, rotation_turn3 = face_filter(
+                        face_detection,
+                        0,
+                        img,
+                        True,
+                        (rotation_turn1, rotation_turn2, rotation_turn3),
+                    )
 
-            elif fingers == 2:
-                sub_toggleTimer += 1 / fps
-                if sub_toggleTimer >= 2:
-                    sub_toggleTimer = 0
-                    game_remote()
-
-                img, rotation_turn1, rotation_turn2, rotation_turn3 = face_filter(
-                    face_detection,
-                    2,
-                    img,
-                    True,
-                    (rotation_turn1, rotation_turn2, rotation_turn3),
-                )
-
-            elif fingers == 3:
-                sub_toggleTimer += 1 / fps
-                if sub_toggleTimer >= 2:
-                    sub_toggleTimer = 0
-                    volume()
-
-                img, rotation_turn1, rotation_turn2, rotation_turn3 = face_filter(
-                    face_detection,
-                    3,
-                    img,
-                    True,
-                    (rotation_turn1, rotation_turn2, rotation_turn3),
-                )
-
-            elif fingers == 4:
-                sub_toggleTimer += 1 / fps
-                if sub_toggleTimer >= 2:
-                    sub_toggleTimer = 0
-                    brightness()
-
-                img, rotation_turn1, rotation_turn2, rotation_turn3 = face_filter(
-                    face_detection,
-                    4,
-                    img,
-                    True,
-                    (rotation_turn1, rotation_turn2, rotation_turn3),
-                )
-
-            elif fingers == 5:
-                sub_toggleTimer += 1 / fps
-                if sub_toggleTimer >= 2:
-                    sub_toggleTimer = 0
-                    screenshot()
-
-                img, rotation_turn1, rotation_turn2, rotation_turn3 = face_filter(
-                    face_detection,
-                    5,
-                    img,
-                    True,
-                    (rotation_turn1, rotation_turn2, rotation_turn3),
-                )
-
-            else:
-                sub_toggleTimer = 0
-
-                img, rotation_turn1, rotation_turn2, rotation_turn3 = face_filter(
-                    face_detection,
-                    0,
-                    img,
-                    True,
-                    (rotation_turn1, rotation_turn2, rotation_turn3),
-                )
-
-        cv2.putText(
-            img, f"FPS:{int(fps)}", (30, 30), cv2.FONT_HERSHEY_PLAIN, 2, (255, 255, 255)
-        )
-        cv2.imshow("Virtual Assistant", img)
-        cv2.moveWindow("Virtual Assistant", 100, 200)
+        except TypeError:
+            print("Problem in Reading Image")
+            
+        if img:
+            cv2.putText(
+                img, f"FPS:{int(fps)}", (210, 420), cv2.FONT_HERSHEY_PLAIN, 2, (255, 255, 255)
+            )
+            cv2.imshow("Virtual Assistant", img)
+            cv2.moveWindow("Virtual Assistant", 100, 200)
 
         if cv2.waitKey(1) & 0xFF == ord("q"):
             cap.release()

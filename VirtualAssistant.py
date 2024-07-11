@@ -4,10 +4,11 @@ import mediapipe as mp
 import time
 import math
 
+#Importing Face Detector related Libraries
+from FaceTracking import face_filter
 
 #Importing Hand Detector And Additional Functions
 from HandTracking import HandDetector
-from FaceTracking import face_filter
 
 def recognizeFingerJoin(hands : list[list[int]]) -> bool: 
     #OPENING/CLOSING OPTIONS 

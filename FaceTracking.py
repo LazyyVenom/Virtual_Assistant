@@ -9,8 +9,6 @@ from additional_functions import (
 mp_face_detection = mp.solutions.face_detection
 mp_drawing = mp.solutions.drawing_utils
 
-cap = cv2.VideoCapture(0)
-
 def face_filter(face_detection, selected: int, image):
     """
     To Apply Face Filter Image.
@@ -182,6 +180,8 @@ def face_filter(face_detection, selected: int, image):
     return None  # Return None if no detections
 
 if __name__ == '__main__':
+    cap = cv2.VideoCapture(0)
+
     face_detection =  mp_face_detection.FaceDetection(
         model_selection=1, min_detection_confidence=0.4
     )

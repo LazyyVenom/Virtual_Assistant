@@ -64,14 +64,14 @@ def volume():
 def brightness():
     print("Brightness")
 
-def iron_man_mode():
-    print("IronMan Mode")
+def gestures_control():
+    print("Gestures Control")
 
-def pc_settings():
-    print("PC Settings")
+def game_remote():
+    print("Game Remote")
 
-def file_manager():
-    print("File Manager")
+def screenshot():
+    print("ScreenShot")
 
 def main():
     """
@@ -125,75 +125,52 @@ def main():
                 cv2.circle(img,(600,20),10,(0,0,255),cv2.FILLED)
 
         if settingFlag:
-            img = transparent_rectangle(img,5,70,240,230,(25,60,100))
             if fingers == 1:
                 sub_toggleTimer += 1 / fps
                 if sub_toggleTimer >= 1:
                     sub_toggleTimer = 0
-                    volume()
+                    gestures_control()
 
-                cv2.putText(img,"Volume", (10,100),cv2.FONT_HERSHEY_PLAIN,2,color=(255,0,0))
-                cv2.putText(img,"Brightness", (10,130),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"IronMan Mode", (10,160),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"PC Settings", (10,190),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"File Manager", (10,220),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
+                img = face_filter(face_detection,1,img,True)
             
             elif fingers == 2:
                 sub_toggleTimer += 1 / fps
                 if sub_toggleTimer >= 1:
                     sub_toggleTimer = 0
-                    brightness()
+                    game_remote()
 
-                cv2.putText(img,"Volume", (10,100),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"Brightness", (10,130),cv2.FONT_HERSHEY_PLAIN,2,color=(255,0,0))
-                cv2.putText(img,"IronMan Mode", (10,160),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"PC Settings", (10,190),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"File Manager", (10,220),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
+                img = face_filter(face_detection,2,img,True)
             
             elif fingers == 3:
                 sub_toggleTimer += 1 / fps
                 if sub_toggleTimer >= 1:
                     sub_toggleTimer = 0
-                    iron_man_mode()
+                    volume()
 
-                cv2.putText(img,"Volume", (10,100),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"Brightness", (10,130),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"IronMan Mode", (10,160),cv2.FONT_HERSHEY_PLAIN,2,color=(255,0,0))
-                cv2.putText(img,"PC Settings", (10,190),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"File Manager", (10,220),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-            
+                img = face_filter(face_detection,3,img,True)
+
             elif fingers == 4:
                 sub_toggleTimer += 1 / fps
                 if sub_toggleTimer >= 1:
                     sub_toggleTimer = 0
-                    pc_settings()
+                    brightness()
 
-                cv2.putText(img,"Volume", (10,100),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"Brightness", (10,130),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"IronMan Mode", (10,160),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"PC Settings", (10,190),cv2.FONT_HERSHEY_PLAIN,2,color=(255,0,0))
-                cv2.putText(img,"File Manager", (10,220),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
+                img = face_filter(face_detection,4,img,True)
             
             elif fingers == 5:
                 sub_toggleTimer += 1 / fps
                 if sub_toggleTimer >= 1:
                     sub_toggleTimer = 0
-                    file_manager()
+                    screenshot()
 
-                cv2.putText(img,"Volume", (10,100),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"Brightness", (10,130),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"IronMan Mode", (10,160),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"PC Settings", (10,190),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"File Manager", (10,220),cv2.FONT_HERSHEY_PLAIN,2,color=(255,0,0))
-            
+                img = face_filter(face_detection,5,img,True)
+
+                
             else:
                 sub_toggleTimer = 0
 
-                cv2.putText(img,"Volume", (10,100),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"Brightness", (10,130),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"IronMan Mode", (10,160),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"PC Settings", (10,190),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
-                cv2.putText(img,"File Manager", (10,220),cv2.FONT_HERSHEY_PLAIN,2,color=(0,255,0))
+                img = face_filter(face_detection,0,img,True)
+                img = face_filter(face_detection,0,img,True)
 
 
         cv2.putText(img,f"FPS:{int(fps)}", (30,30), cv2.FONT_HERSHEY_PLAIN,2,(255,255,255))

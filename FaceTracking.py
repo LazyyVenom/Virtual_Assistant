@@ -182,26 +182,26 @@ def face_filter(face_detection, selected: int, image):
     return None  # Return None if no detections
 
 if __name__ == '__main__':
-    with mp_face_detection.FaceDetection(
+    face_detection =  mp_face_detection.FaceDetection(
         model_selection=1, min_detection_confidence=0.4
-    ) as face_detection:
+    )
 
-        rotation_turn1 = 0
-        rotation_turn2 = 8
-        rotation_turn3 = 0
-        while cap.isOpened():
-            success, image = cap.read()
-            if not success:
-                continue
+    rotation_turn1 = 0
+    rotation_turn2 = 8
+    rotation_turn3 = 0
+    while cap.isOpened():
+        success, image = cap.read()
+        if not success:
+            continue
 
-            before_image = image
-            image = face_filter(face_detection, 2, image)
+        before_image = image
+        image = face_filter(face_detection, 2, image)
 
-            if image is not None and image.size != 0:
-                cv2.imshow("Trying Filter", image)
+        if image is not None and image.size != 0:
+            cv2.imshow("Trying Filter", image)
 
-            if cv2.waitKey(5) & 0xFF == 27:
-                break
+        if cv2.waitKey(5) & 0xFF == 27:
+            break
 
     cap.release()
     cv2.destroyAllWindows()

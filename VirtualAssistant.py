@@ -76,7 +76,6 @@ def main():
     Sample Of How You Should Use These Functions.
     """
     cap = cv2.VideoCapture(0)
-
     cap.set(4,240)
     cap.set(5,480)
 

@@ -9,7 +9,7 @@ from additional_functions import (
 mp_face_detection = mp.solutions.face_detection
 mp_drawing = mp.solutions.drawing_utils
 
-def face_filter(face_detection, selected: int, image, setting_toggle,rotations):
+def face_filter(face_detection, selected: int, image, setting_toggle,rotations,selecting=False):
     """
     To Apply Face Filter Image.
     """

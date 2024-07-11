@@ -137,7 +137,7 @@ def main():
         if settingFlag:
             if fingers == 1:
                 sub_toggleTimer += 1 / fps
-                if sub_toggleTimer >= 1:
+                if sub_toggleTimer >= 2:
                     sub_toggleTimer = 0
                     gestures_control()
 
@@ -151,7 +151,7 @@ def main():
 
             elif fingers == 2:
                 sub_toggleTimer += 1 / fps
-                if sub_toggleTimer >= 1:
+                if sub_toggleTimer >= 2:
                     sub_toggleTimer = 0
                     game_remote()
 
@@ -165,7 +165,7 @@ def main():
 
             elif fingers == 3:
                 sub_toggleTimer += 1 / fps
-                if sub_toggleTimer >= 1:
+                if sub_toggleTimer >= 2:
                     sub_toggleTimer = 0
                     volume()
 
@@ -179,7 +179,7 @@ def main():
 
             elif fingers == 4:
                 sub_toggleTimer += 1 / fps
-                if sub_toggleTimer >= 1:
+                if sub_toggleTimer >= 2:
                     sub_toggleTimer = 0
                     brightness()
 
@@ -193,7 +193,7 @@ def main():
 
             elif fingers == 5:
                 sub_toggleTimer += 1 / fps
-                if sub_toggleTimer >= 1:
+                if sub_toggleTimer >= 2:
                     sub_toggleTimer = 0
                     screenshot()
 
@@ -226,7 +226,6 @@ def main():
             cap.release()
             cv2.destroyAllWindows()
             break
-
 
 if __name__ == "__main__":
     main()

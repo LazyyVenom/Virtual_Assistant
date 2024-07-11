@@ -117,8 +117,6 @@ def face_filter(face_detection, selected: int, image, setting_toggle,rotations):
             rotation_turn3 += 1
             rotation_turn3 = rotation_turn3 % 20
 
-            selected = 4
-
             if setting_toggle:
                 # Option 1
                 image = option_generator(

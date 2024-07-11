@@ -13,6 +13,7 @@ def face_filter(face_detection, selected: int, image, setting_toggle):
     """
     To Apply Face Filter Image.
     """
+    global rotation_turn1,rotation_turn2,rotation_turn3
     image.flags.writeable = False
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     results = face_detection.process(image)

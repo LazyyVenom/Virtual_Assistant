@@ -81,7 +81,16 @@ def main():
     cap.set(4,240)
     cap.set(5,480)
 
+    mp_face_detection = mp.solutions.face_detection
+
     handsDetector = HandDetector()
+    face_detection =  mp_face_detection.FaceDetection(
+        model_selection=1, min_detection_confidence=0.4
+    )
+
+    rotation_turn1 = 0
+    rotation_turn2 = 8
+    rotation_turn3 = 0
 
     pTime = 0
     cTime = 0

@@ -9,7 +9,7 @@ from additional_functions import (
 mp_face_detection = mp.solutions.face_detection
 mp_drawing = mp.solutions.drawing_utils
 
-def face_filter(face_detection, selected: int, image):
+def face_filter(face_detection, selected: int, image, setting_toggle):
     """
     To Apply Face Filter Image.
     """
@@ -119,62 +119,63 @@ def face_filter(face_detection, selected: int, image):
 
             selected = 4
 
-            # Option 1
-            image = option_generator(
-                image,
-                (int(eyes[0].x * iw) - 80, int(eyes[0].y * ih) - 90),
-                text="G",
-                radius=int(30 * scale),
-                color=(100, 200, 0) if selected == 1 else (255, 210, 0),
-            )
+            if setting_toggle:
+                # Option 1
+                image = option_generator(
+                    image,
+                    (int(eyes[0].x * iw) - 80, int(eyes[0].y * ih) - 90),
+                    text="G",
+                    radius=int(30 * scale),
+                    color=(100, 200, 0) if selected == 1 else (255, 210, 0),
+                )
 
-            # Option 2
-            image = option_generator(
-                image,
-                (int(eyes[0].x * iw) - 30, int(eyes[0].y * ih) - 130),
-                text="R",
-                radius=int(30 * scale),
-                color=(100, 200, 0) if selected == 2 else (255, 210, 0),
-            )
+                # Option 2
+                image = option_generator(
+                    image,
+                    (int(eyes[0].x * iw) - 30, int(eyes[0].y * ih) - 130),
+                    text="R",
+                    radius=int(30 * scale),
+                    color=(100, 200, 0) if selected == 2 else (255, 210, 0),
+                )
 
-            # Option 3
-            image = option_generator(
-                image,
-                (int(eyes[0].x * iw) + 30, int(eyes[0].y * ih) - 140),
-                text="V",
-                radius=int(30 * scale),
-                color=(100, 200, 0) if selected == 3 else (255, 210, 0),
-            )
+                # Option 3
+                image = option_generator(
+                    image,
+                    (int(eyes[0].x * iw) + 30, int(eyes[0].y * ih) - 140),
+                    text="V",
+                    radius=int(30 * scale),
+                    color=(100, 200, 0) if selected == 3 else (255, 210, 0),
+                )
 
-            # Option 4
-            image = option_generator(
-                image,
-                (int(eyes[0].x * iw) + 90, int(eyes[0].y * ih) - 130),
-                text="B",
-                radius=int(30 * scale),
-                color=(100, 200, 0) if selected == 4 else (255, 210, 0),
-            )
+                # Option 4
+                image = option_generator(
+                    image,
+                    (int(eyes[0].x * iw) + 90, int(eyes[0].y * ih) - 130),
+                    text="B",
+                    radius=int(30 * scale),
+                    color=(100, 200, 0) if selected == 4 else (255, 210, 0),
+                )
 
-            # Option 5
-            image = option_generator(
-                image,
-                (int(eyes[0].x * iw) + 140, int(eyes[0].y * ih) - 90),
-                text="S",
-                radius=int(30 * scale),
-                color=(100, 200, 0) if selected == 5 else (255, 210, 0),
-            )
+                # Option 5
+                image = option_generator(
+                    image,
+                    (int(eyes[0].x * iw) + 140, int(eyes[0].y * ih) - 90),
+                    text="S",
+                    radius=int(30 * scale),
+                    color=(100, 200, 0) if selected == 5 else (255, 210, 0),
+                )
 
-            # image = show_random_numbers_on_frame(image,100)
-            cv2.putText(
-                image,
-                "G - Gestures Controlling, R - Game Remote, V - Volume, B - Brightness, S - ScreenShot",
-                (7, 25),
-                cv2.FONT_HERSHEY_SIMPLEX,
-                0.42,
-                (200, 130, 0),
-                1,
-                cv2.LINE_AA,
-            )
+                # image = show_random_numbers_on_frame(image,100)
+                cv2.putText(
+                    image,
+                    "G - Gestures Controlling, R - Game Remote, V - Volume, B - Brightness, S - ScreenShot",
+                    (7, 25),
+                    cv2.FONT_HERSHEY_SIMPLEX,
+                    0.42,
+                    (200, 130, 0),
+                    1,
+                    cv2.LINE_AA,
+                )
 
             return image
     return None  # Return None if no detections
@@ -194,8 +195,7 @@ if __name__ == '__main__':
         if not success:
             continue
 
-        before_image = image
-        image = face_filter(face_detection, 2, image)
+        image = face_filter(face_detection, 2, image,False)
 
         if image is not None and image.size != 0:
             cv2.imshow("Trying Filter", image)

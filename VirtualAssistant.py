@@ -220,12 +220,12 @@ def main():
         except TypeError:
             print("Problem in Reading Image")
             
-        if img:
-            cv2.putText(
-                img, f"FPS:{int(fps)}", (210, 420), cv2.FONT_HERSHEY_PLAIN, 2, (255, 255, 255)
-            )
-            cv2.imshow("Virtual Assistant", img)
-            cv2.moveWindow("Virtual Assistant", 100, 200)
+        # if img:
+        cv2.putText(
+            img, f"FPS:{int(fps)}", (210, 420), cv2.FONT_HERSHEY_PLAIN, 2, (255, 255, 255)
+        )
+        cv2.imshow("Virtual Assistant", img)
+        cv2.moveWindow("Virtual Assistant", 100, 200)
 
         if cv2.waitKey(1) & 0xFF == ord("q"):
             cap.release()
@@ -234,3 +234,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    

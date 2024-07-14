@@ -161,16 +161,17 @@ def face_filter(face_detection, selected: int, image, setting_toggle,rotations,d
                 )
 
                 # image = show_random_numbers_on_frame(image,100)
-                cv2.putText(
-                    image,
-                    "G - Gestures Controlling, R - Game Remote, V - Volume, B - Brightness, X - Exit",
-                    (7, 25),
-                    cv2.FONT_HERSHEY_SIMPLEX,
-                    0.42,
-                    (200, 130, 0),
-                    1,
-                    cv2.LINE_AA,
-                )
+                if selected == 0:
+                    cv2.putText(
+                        image,
+                        "G - Gestures Controlling, R - Game Remote, V - Volume, B - Brightness, X - Exit",
+                        (7, 25),
+                        cv2.FONT_HERSHEY_SIMPLEX,
+                        0.42,
+                        (200, 130, 0),
+                        1,
+                        cv2.LINE_AA,
+                    )
 
             return image,rotation_turn1,rotation_turn2,rotation_turn3
     return None  # Return None if no detections

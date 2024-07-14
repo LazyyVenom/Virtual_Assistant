@@ -106,6 +106,8 @@ def main():
     settingFlag = False
     toggleTimer = 0
     sub_toggleTimer = 0
+    selected_already = False
+    selected = 0
     while True:
         _, img = cap.read()
 
@@ -120,7 +122,10 @@ def main():
         fingers = 0
         if hands:
             setting = recognizeFingerJoin(hands)
-            fingers = countFingers(hands)
+            if not selected_already:
+                fingers = countFingers(hands)
+            else:
+                fingers = 0
 
         toggleTimer += 1 / fps
 
@@ -132,12 +137,14 @@ def main():
             else:
                 cv2.circle(img, (600, 20), 10, (0, 0, 255), cv2.FILLED)
 
+        prev_img = img
         try:
             if settingFlag:
                 if fingers == 1:
                     sub_toggleTimer += 1 / fps
                     if sub_toggleTimer >= 2:
                         sub_toggleTimer = 0
+                        selected = 1
                         gestures_control()
 
                     img, rotation_turn1, rotation_turn2, rotation_turn3 = face_filter(
@@ -152,6 +159,7 @@ def main():
                     sub_toggleTimer += 1 / fps
                     if sub_toggleTimer >= 2:
                         sub_toggleTimer = 0
+                        selected = 2
                         game_remote()
 
                     img, rotation_turn1, rotation_turn2, rotation_turn3 = face_filter(
@@ -166,6 +174,7 @@ def main():
                     sub_toggleTimer += 1 / fps
                     if sub_toggleTimer >= 2:
                         sub_toggleTimer = 0
+                        selected = 3
                         volume()
 
                     img, rotation_turn1, rotation_turn2, rotation_turn3 = face_filter(
@@ -180,6 +189,7 @@ def main():
                     sub_toggleTimer += 1 / fps
                     if sub_toggleTimer >= 2:
                         sub_toggleTimer = 0
+                        selected = 4
                         brightness()
 
                     img, rotation_turn1, rotation_turn2, rotation_turn3 = face_filter(
@@ -215,19 +225,19 @@ def main():
                         True,
                         (rotation_turn1, rotation_turn2, rotation_turn3),
                     )
+            
+            else:
+                img = face_filter(face_detection,0,img,False,(rotation_turn1, rotation_turn2, rotation_turn3))
 
         except TypeError:
             print("Problem in Reading Image")
             
         try:
-            cv2.putText(
-                img, f"FPS:{int(fps)}", (210, 420), cv2.FONT_HERSHEY_PLAIN, 2, (255, 255, 255)
-            )
             cv2.imshow("Virtual Assistant", img)
             cv2.moveWindow("Virtual Assistant", 100, 200)
 
         except:
-            print("Error With This Image")
+            cv2.imshow("Virtual Assistant", prev_img)
 
         if cv2.waitKey(1) & 0xFF == ord("q"):
             cap.release()

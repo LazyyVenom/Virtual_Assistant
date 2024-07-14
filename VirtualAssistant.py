@@ -2,7 +2,9 @@
 import cv2
 import mediapipe as mp
 import time
+import pyautogui as pg
 import math
+import os
 
 # Importing Face Detector related Libraries
 from FaceTracking import face_filter
@@ -77,10 +79,6 @@ def gestures_control():
 
 def game_remote():
     print("Game Remote")
-
-
-def screenshot():
-    print("ScreenShot")
 
 
 def main():
@@ -196,7 +194,8 @@ def main():
                     sub_toggleTimer += 1 / fps
                     if sub_toggleTimer >= 2:
                         sub_toggleTimer = 0
-                        screenshot()
+                        print("Exiting...")
+                        exit()
 
                     img, rotation_turn1, rotation_turn2, rotation_turn3 = face_filter(
                         face_detection,

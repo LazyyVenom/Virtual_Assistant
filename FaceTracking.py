@@ -158,7 +158,7 @@ def face_filter(face_detection, selected: int, image, setting_toggle,rotations,s
                 image = option_generator(
                     image,
                     (int(eyes[0].x * iw) + 140, int(eyes[0].y * ih) - 90),
-                    text="S",
+                    text="X",
                     radius=int(30 * scale),
                     color=(100, 200, 0) if selected == 5 else (255, 210, 0),
                 )
@@ -166,7 +166,7 @@ def face_filter(face_detection, selected: int, image, setting_toggle,rotations,s
                 # image = show_random_numbers_on_frame(image,100)
                 cv2.putText(
                     image,
-                    "G - Gestures Controlling, R - Game Remote, V - Volume, B - Brightness, S - ScreenShot",
+                    "G - Gestures Controlling, R - Game Remote, V - Volume, B - Brightness, X - Exit",
                     (7, 25),
                     cv2.FONT_HERSHEY_SIMPLEX,
                     0.42,

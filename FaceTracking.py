@@ -13,11 +13,8 @@ def face_filter(face_detection, selected: int, image, setting_toggle,rotations,d
     """
     To Apply Face Filter Image.
     """
-    image.flags.writeable = False
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     results = face_detection.process(image)
-
-    image.flags.writeable = True
     image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
     if results.detections:

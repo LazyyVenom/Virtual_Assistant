@@ -65,8 +65,11 @@ def countFingers(hands: list[list[int]]) -> int:
     return fingers
 
 
-def volume():
-    print("Volume")
+def volume(img,hands):
+    if hands:
+        pt1, pt2 = (hands[0][4][1],hands[0][4][2]), (hands[0][8][1],hands[0][8][2])
+        img = cv2.line(img,pt1,pt2,(255,255,255),5)
+    return img
 
 
 def brightness():
@@ -106,6 +109,7 @@ def main():
     settingFlag = False
     toggleTimer = 0
     sub_toggleTimer = 0
+    selected = 0
     selected_already = False
     while True:
         _, img = cap.read()
@@ -117,7 +121,6 @@ def main():
         pTime = cTime
 
         setting = False
-
         fingers = 0
         if hands:
             setting = recognizeFingerJoin(hands)
@@ -129,7 +132,10 @@ def main():
         toggleTimer += 1 / fps
 
         if setting and toggleTimer >= 2.5:
-            settingFlag = not settingFlag
+            if selected != 0:
+                selected = 0
+            else:
+                settingFlag = not settingFlag
             toggleTimer = 0
             selected_already = 0
             if settingFlag:
@@ -140,10 +146,13 @@ def main():
         prev_img = img
         try:
             if settingFlag:
-                if fingers == 1:
+                if fingers == 1 or selected == 1:
                     sub_toggleTimer += 1 / fps
-                    if sub_toggleTimer >= 2:
+                    if sub_toggleTimer >= 2 and selected == 0:
                         sub_toggleTimer = 0
+                        selected == 1
+
+                    if selected == 1:
                         gestures_control()
 
                     img, rotation_turn1, rotation_turn2, rotation_turn3 = face_filter(
@@ -154,10 +163,13 @@ def main():
                         (rotation_turn1, rotation_turn2, rotation_turn3),
                     )
 
-                elif fingers == 2:
+                elif fingers == 2 or selected == 2:
                     sub_toggleTimer += 1 / fps
-                    if sub_toggleTimer >= 2:
+                    if sub_toggleTimer >= 2 and selected == 0:
                         sub_toggleTimer = 0
+                        selected = 2
+                    
+                    if selected == 2:
                         game_remote()
 
                     img, rotation_turn1, rotation_turn2, rotation_turn3 = face_filter(
@@ -168,11 +180,14 @@ def main():
                         (rotation_turn1, rotation_turn2, rotation_turn3),
                     )
 
-                elif fingers == 3:
+                elif fingers == 3 or selected == 3:
                     sub_toggleTimer += 1 / fps
-                    if sub_toggleTimer >= 2:
+                    if sub_toggleTimer >= 2 and selected == 0:
                         sub_toggleTimer = 0
-                        volume()
+                        selected = 3
+
+                    if selected == 3:
+                        img = volume(img,hands)
 
                     img, rotation_turn1, rotation_turn2, rotation_turn3 = face_filter(
                         face_detection,
@@ -182,10 +197,13 @@ def main():
                         (rotation_turn1, rotation_turn2, rotation_turn3),
                     )
 
-                elif fingers == 4:
+                elif fingers == 4 or selected == 4:
                     sub_toggleTimer += 1 / fps
-                    if sub_toggleTimer >= 2:
+                    if sub_toggleTimer >= 2 and selected == 0:
                         sub_toggleTimer = 0
+                        selected = 4
+
+                    if selected == 4:
                         brightness()
 
                     img, rotation_turn1, rotation_turn2, rotation_turn3 = face_filter(
@@ -198,10 +216,10 @@ def main():
 
                 elif fingers == 5:
                     sub_toggleTimer += 1 / fps
-                    if sub_toggleTimer >= 2:
+                    if sub_toggleTimer >= 2 and selected == 0:
                         sub_toggleTimer = 0
                         print("Exiting...")
-                        exit()
+                        # exit()
 
                     img, rotation_turn1, rotation_turn2, rotation_turn3 = face_filter(
                         face_detection,

@@ -107,7 +107,6 @@ def main():
     toggleTimer = 0
     sub_toggleTimer = 0
     selected_already = False
-    selected = 0
     while True:
         _, img = cap.read()
 
@@ -129,9 +128,10 @@ def main():
 
         toggleTimer += 1 / fps
 
-        if setting and toggleTimer >= 3:
+        if setting and toggleTimer >= 2.5:
             settingFlag = not settingFlag
             toggleTimer = 0
+            selected_already = 0
             if settingFlag:
                 cv2.circle(img, (600, 20), 10, (0, 255, 0), cv2.FILLED)
             else:
@@ -144,7 +144,6 @@ def main():
                     sub_toggleTimer += 1 / fps
                     if sub_toggleTimer >= 2:
                         sub_toggleTimer = 0
-                        selected = 1
                         gestures_control()
 
                     img, rotation_turn1, rotation_turn2, rotation_turn3 = face_filter(
@@ -159,7 +158,6 @@ def main():
                     sub_toggleTimer += 1 / fps
                     if sub_toggleTimer >= 2:
                         sub_toggleTimer = 0
-                        selected = 2
                         game_remote()
 
                     img, rotation_turn1, rotation_turn2, rotation_turn3 = face_filter(
@@ -174,7 +172,6 @@ def main():
                     sub_toggleTimer += 1 / fps
                     if sub_toggleTimer >= 2:
                         sub_toggleTimer = 0
-                        selected = 3
                         volume()
 
                     img, rotation_turn1, rotation_turn2, rotation_turn3 = face_filter(
@@ -189,7 +186,6 @@ def main():
                     sub_toggleTimer += 1 / fps
                     if sub_toggleTimer >= 2:
                         sub_toggleTimer = 0
-                        selected = 4
                         brightness()
 
                     img, rotation_turn1, rotation_turn2, rotation_turn3 = face_filter(

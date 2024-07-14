@@ -227,7 +227,7 @@ def main():
                     )
             
             else:
-                img = face_filter(face_detection,0,img,False,(rotation_turn1, rotation_turn2, rotation_turn3))
+                img,rotation_turn1,rotation_turn2,rotation_turn3 = face_filter(face_detection,0,img,False,(rotation_turn1, rotation_turn2, rotation_turn3))
 
         except TypeError:
             print("Problem in Reading Image")

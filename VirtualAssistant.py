@@ -161,6 +161,7 @@ def main():
                         img,
                         True,
                         (rotation_turn1, rotation_turn2, rotation_turn3),
+                        not selected==0
                     )
 
                 elif fingers == 2 or selected == 2:
@@ -178,6 +179,7 @@ def main():
                         img,
                         True,
                         (rotation_turn1, rotation_turn2, rotation_turn3),
+                        not selected==0
                     )
 
                 elif fingers == 3 or selected == 3:
@@ -195,6 +197,7 @@ def main():
                         img,
                         True,
                         (rotation_turn1, rotation_turn2, rotation_turn3),
+                        not selected==0
                     )
 
                 elif fingers == 4 or selected == 4:
@@ -212,6 +215,7 @@ def main():
                         img,
                         True,
                         (rotation_turn1, rotation_turn2, rotation_turn3),
+                        not selected==0
                     )
 
                 elif fingers == 5:
@@ -227,6 +231,7 @@ def main():
                         img,
                         True,
                         (rotation_turn1, rotation_turn2, rotation_turn3),
+                        not selected==0
                     )
 
                 else:

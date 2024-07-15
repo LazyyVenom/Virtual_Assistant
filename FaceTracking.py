@@ -114,12 +114,22 @@ def face_filter(face_detection, selected: int, image, setting_toggle,rotations,d
             rotation_turn3 += 1
             rotation_turn3 = rotation_turn3 % 20
 
+            placement = [
+                (int(eyes[0].x * iw) - 80, int(eyes[0].y * ih) - 90),
+                (int(eyes[0].x * iw) - 30, int(eyes[0].y * ih) - 130),
+                (int(eyes[0].x * iw) + 30, int(eyes[0].y * ih) - 140),
+                (int(eyes[0].x * iw) + 90, int(eyes[0].y * ih) - 130),
+                (int(eyes[0].x * iw) + 140, int(eyes[0].y * ih) - 90),
+            ]
+
+            symbol = ["G","R","V","B","X"]
+
             if setting_toggle and not done_selecting:
                 # Option 1
                 image = option_generator(
                     image,
-                    (int(eyes[0].x * iw) - 80, int(eyes[0].y * ih) - 90),
-                    text="G",
+                    placement[0],
+                    text=symbol[0],
                     radius=int(30 * scale),
                     color=(100, 200, 0) if selected == 1 else (255, 210, 0),
                 )
@@ -127,8 +137,8 @@ def face_filter(face_detection, selected: int, image, setting_toggle,rotations,d
                 # Option 2
                 image = option_generator(
                     image,
-                    (int(eyes[0].x * iw) - 30, int(eyes[0].y * ih) - 130),
-                    text="R",
+                    placement[1],
+                    text=symbol[1],
                     radius=int(30 * scale),
                     color=(100, 200, 0) if selected == 2 else (255, 210, 0),
                 )
@@ -136,8 +146,8 @@ def face_filter(face_detection, selected: int, image, setting_toggle,rotations,d
                 # Option 3
                 image = option_generator(
                     image,
-                    (int(eyes[0].x * iw) + 30, int(eyes[0].y * ih) - 140),
-                    text="V",
+                    placement[2],
+                    text=symbol[2],
                     radius=int(30 * scale),
                     color=(100, 200, 0) if selected == 3 else (255, 210, 0),
                 )
@@ -145,8 +155,8 @@ def face_filter(face_detection, selected: int, image, setting_toggle,rotations,d
                 # Option 4
                 image = option_generator(
                     image,
-                    (int(eyes[0].x * iw) + 90, int(eyes[0].y * ih) - 130),
-                    text="B",
+                    placement[3],
+                    text=symbol[3],
                     radius=int(30 * scale),
                     color=(100, 200, 0) if selected == 4 else (255, 210, 0),
                 )
@@ -154,8 +164,8 @@ def face_filter(face_detection, selected: int, image, setting_toggle,rotations,d
                 # Option 5
                 image = option_generator(
                     image,
-                    (int(eyes[0].x * iw) + 140, int(eyes[0].y * ih) - 90),
-                    text="X",
+                    placement[4],
+                    text=symbol[4],
                     radius=int(30 * scale),
                     color=(100, 200, 0) if selected == 5 else (255, 210, 0),
                 )
@@ -172,6 +182,15 @@ def face_filter(face_detection, selected: int, image, setting_toggle,rotations,d
                         1,
                         cv2.LINE_AA,
                     )
+            
+            if done_selecting:
+                image = option_generator(
+                    image,
+                    placement[selected-1],
+                    text=symbol[selected-1],
+                    radius=int(30 * scale),
+                    color=(100, 150, 0),
+                )
 
             return image,rotation_turn1,rotation_turn2,rotation_turn3
     return None  # Return None if no detections

@@ -186,10 +186,10 @@ def face_filter(face_detection, selected: int, image, setting_toggle,rotations,d
             if done_selecting:
                 image = option_generator(
                     image,
-                    placement[selected-1],
+                    (int(eyes[0].x * iw) + 30, int(eyes[0].y * ih) - 140),
                     text=symbol[selected-1],
-                    radius=int(30 * scale),
-                    color=(100, 150, 0),
+                    radius=int(30 * scale * 1.5),
+                    color=(255, 210, 0),
                 )
 
             return image,rotation_turn1,rotation_turn2,rotation_turn3

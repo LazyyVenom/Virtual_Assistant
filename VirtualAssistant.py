@@ -131,13 +131,13 @@ def main():
 
         toggleTimer += 1 / fps
 
-        if setting and toggleTimer >= 2.5:
+        if setting and toggleTimer >= 2:
             if selected != 0:
                 selected = 0
             else:
                 settingFlag = not settingFlag
             toggleTimer = 0
-            selected_already = 0
+            selected_already = False
             if settingFlag:
                 cv2.circle(img, (600, 20), 10, (0, 255, 0), cv2.FILLED)
             else:
@@ -150,7 +150,8 @@ def main():
                     sub_toggleTimer += 1 / fps
                     if sub_toggleTimer >= 2 and selected == 0:
                         sub_toggleTimer = 0
-                        selected == 1
+                        selected = 1
+                        selected_already = True
 
                     if selected == 1:
                         gestures_control()
@@ -169,6 +170,7 @@ def main():
                     if sub_toggleTimer >= 2 and selected == 0:
                         sub_toggleTimer = 0
                         selected = 2
+                        selected_already = True
                     
                     if selected == 2:
                         game_remote()
@@ -187,6 +189,7 @@ def main():
                     if sub_toggleTimer >= 2 and selected == 0:
                         sub_toggleTimer = 0
                         selected = 3
+                        selected_already = True
 
                     if selected == 3:
                         img = volume(img,hands)
@@ -205,6 +208,7 @@ def main():
                     if sub_toggleTimer >= 2 and selected == 0:
                         sub_toggleTimer = 0
                         selected = 4
+                        selected_already = True
 
                     if selected == 4:
                         brightness()

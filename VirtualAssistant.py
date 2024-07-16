@@ -69,7 +69,7 @@ def volume(img,hands):
     if hands:
         pt1, pt2 = (hands[0][4][1],hands[0][4][2]), (hands[0][8][1],hands[0][8][2])
         img = cv2.line(img,pt1,pt2,(255, 210, 0),5)
-        img = cv2.circle(img,((pt1[0]+pt2[0])//2,(pt1[1]+pt2[1])//2),5,(255, 210, 0),cv2.FILLED)
+        img = cv2.circle(img,((pt1[0]+pt2[0])//2,(pt1[1]+pt2[1])//2),8,(200, 130, 0),cv2.FILLED)
 
     return img
 

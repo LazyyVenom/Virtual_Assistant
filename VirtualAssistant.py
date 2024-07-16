@@ -65,7 +65,7 @@ def countFingers(hands: list[list[int]]) -> int:
     return fingers
 
 
-def volume(img,hands):
+def meter_manager(img,hands,type):
     if hands:
         pt1, pt2 = (hands[0][4][1],hands[0][4][2]), (hands[0][8][1],hands[0][8][2])
         img = cv2.line(img,pt1,pt2,(255, 210, 0),5)
@@ -74,8 +74,14 @@ def volume(img,hands):
     return img
 
 
-def brightness():
-    print("Brightness")
+def volume(img,hands):
+    img = meter_manager(img,hands,type="V")
+    return img
+
+
+def brightness(img,hands):
+    img = meter_manager(img,hands,type="B")
+    return img
 
 
 def gestures_control():

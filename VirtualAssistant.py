@@ -69,6 +69,8 @@ def volume(img,hands):
     if hands:
         pt1, pt2 = (hands[0][4][1],hands[0][4][2]), (hands[0][8][1],hands[0][8][2])
         img = cv2.line(img,pt1,pt2,(255,255,255),5)
+        img = cv2.circle(img,((pt1[0]+pt2[0])//2,(pt1[1]+pt2[1])//2),5,(255,255,255),cv2.FILLED)
+
     return img
 
 
@@ -227,7 +229,7 @@ def main():
                     if sub_toggleTimer >= 2 and selected == 0:
                         sub_toggleTimer = 0
                         print("Exiting...")
-                        # exit()
+                        exit()
 
                     img, rotation_turn1, rotation_turn2, rotation_turn3 = face_filter(
                         face_detection,

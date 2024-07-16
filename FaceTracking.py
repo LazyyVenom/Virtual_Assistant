@@ -205,6 +205,7 @@ def face_filter(
                     (int(eyes[0].x * iw) + 30, int(eyes[0].y * ih) - 140),
                     radius=int(30 * scale * 1.5),
                     color=(200, 130, 0),
+                    alpha=0.7
                 )
 
             return image, rotation_turn1, rotation_turn2, rotation_turn3

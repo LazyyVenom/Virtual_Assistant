@@ -9,7 +9,15 @@ from additional_functions import (
 mp_face_detection = mp.solutions.face_detection
 mp_drawing = mp.solutions.drawing_utils
 
-def face_filter(face_detection, selected: int, image, setting_toggle,rotations,done_selecting=False):
+
+def face_filter(
+    face_detection,
+    selected: int,
+    image,
+    setting_toggle,
+    rotations,
+    done_selecting=False,
+):
     """
     To Apply Face Filter Image.
     """
@@ -26,7 +34,7 @@ def face_filter(face_detection, selected: int, image, setting_toggle,rotations,d
             width = int(bboxC.width * iw)
             height = int(bboxC.height * ih)
 
-            rotation_turn1,rotation_turn2,rotation_turn3 = rotations
+            rotation_turn1, rotation_turn2, rotation_turn3 = rotations
 
             center_x, center_y = int(xmin + width / 2), int(ymin + height / 2)
             radius = int(min(width, height) / 2)
@@ -122,7 +130,7 @@ def face_filter(face_detection, selected: int, image, setting_toggle,rotations,d
                 (int(eyes[0].x * iw) + 140, int(eyes[0].y * ih) - 90),
             ]
 
-            symbol = ["G","R","V","B","X"]
+            symbol = ["G", "R", "V", "B", "X"]
 
             if setting_toggle and not done_selecting:
                 # Option 1
@@ -182,23 +190,31 @@ def face_filter(face_detection, selected: int, image, setting_toggle,rotations,d
                         1,
                         cv2.LINE_AA,
                     )
-            
+
             if done_selecting:
                 image = option_generator(
                     image,
                     (int(eyes[0].x * iw) + 30, int(eyes[0].y * ih) - 140),
-                    text=symbol[selected-1],
+                    text=symbol[selected - 1],
                     radius=int(30 * scale * 1.5),
                     color=(255, 210, 0),
                 )
 
-            return image,rotation_turn1,rotation_turn2,rotation_turn3
+                image = transparent_circle_boundary(
+                    image,
+                    (int(eyes[0].x * iw) + 30, int(eyes[0].y * ih) - 140),
+                    radius=int(30 * scale * 1.5),
+                    color=(255, 210, 0),
+                )
+
+            return image, rotation_turn1, rotation_turn2, rotation_turn3
     return None  # Return None if no detections
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     cap = cv2.VideoCapture(0)
 
-    face_detection =  mp_face_detection.FaceDetection(
+    face_detection = mp_face_detection.FaceDetection(
         model_selection=1, min_detection_confidence=0.4
     )
 
@@ -210,7 +226,13 @@ if __name__ == '__main__':
         if not success:
             continue
 
-        image,rotation_turn1,rotation_turn2,rotation_turn3 = face_filter(face_detection, 2, image,False,(rotation_turn1,rotation_turn2,rotation_turn3))
+        image, rotation_turn1, rotation_turn2, rotation_turn3 = face_filter(
+            face_detection,
+            2,
+            image,
+            False,
+            (rotation_turn1, rotation_turn2, rotation_turn3),
+        )
 
         if image is not None and image.size != 0:
             cv2.imshow("Trying Filter", image)

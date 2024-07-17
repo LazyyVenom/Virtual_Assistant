@@ -74,19 +74,14 @@ def countFingers(hands: list[list[int]]) -> int:
 
 def volume_changer(length, img):
     volPer = np.interp(length, [0, 100], [0, 1])
-    volBar = np.interp(length, [0, 100], [400, 150])
+    volBar = np.interp(length, [0, 100], [300, 60])
 
     volume.SetMasterVolumeLevelScalar(volPer, None)
 
-    transparent_rectangle(img,50, 150, 85, 400, (255, 210, 0),boundary=3)
-    # cv2.rectangle(img, (50, 150), (85, 400), (255, 0, 0), 3)
-    transparent_rectangle(img,50, int(volBar), 85, 400, (255, 210, 0))
-    # cv2.rectangle(img, (50, int(volBar)), (85, 400), (255, 0, 0), cv2.FILLED)
-    cv2.putText(img, f'{int(volPer * 100)} %', (40, 450), cv2.FONT_HERSHEY_COMPLEX,
-                1, (255, 0, 0), 3)
-    cVol = int(volume.GetMasterVolumeLevelScalar() * 100)
-    cv2.putText(img, f'Vol Set: {cVol}', (400, 50), cv2.FONT_HERSHEY_COMPLEX,
-                1, (255, 0, 0), 3)
+    transparent_rectangle(img,575, 60, 600, 300, (100, 200, 0),boundary=3)
+    transparent_rectangle(img,575, int(volBar), 600, 300, (255, 210, 0))
+    cv2.putText(img, f'{int(volPer * 100)} %', (500, 50), cv2.FONT_HERSHEY_SIMPLEX,
+                1, (255, 210, 0), 3)
 
     return img
 

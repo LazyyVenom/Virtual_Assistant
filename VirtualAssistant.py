@@ -4,6 +4,7 @@ import mediapipe as mp
 import time
 import numpy as np
 import math
+import screen_brightness_control as sbc
 from ctypes import cast, POINTER
 from comtypes import CLSCTX_ALL
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume

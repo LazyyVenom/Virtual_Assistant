@@ -5,6 +5,9 @@ import time
 import pyautogui as pg
 import math
 import os
+from ctypes import cast, POINTER
+from comtypes import CLSCTX_ALL
+from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
 
 # Importing Face Detector related Libraries
 from FaceTracking import face_filter
@@ -63,6 +66,14 @@ def countFingers(hands: list[list[int]]) -> int:
             fingers += 1
 
     return fingers
+
+
+def volume_changer(vol):
+    devices = AudioUtilities.GetSpeakers()
+    interface = devices.Activate(
+        IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
+    volume = cast(interface, POINTER(IAudioEndpointVolume))
+    volRange = volume.GetVolumeRange()
 
 
 def meter_manager(img,hands,type):

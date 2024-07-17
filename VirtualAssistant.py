@@ -74,14 +74,28 @@ def countFingers(hands: list[list[int]]) -> int:
 
 
 def volume_changer(length, img):
-    volPer = np.interp(length, [0, 100], [0, 1])
-    volBar = np.interp(length, [0, 100], [300, 60])
+    volPer = np.interp(length, [0, 120], [0, 1])
+    volBar = np.interp(length, [0, 120], [300, 60])
 
     volume.SetMasterVolumeLevelScalar(volPer, None)
 
     transparent_rectangle(img,575, 60, 600, 300, (255, 210, 0),boundary=3)
     transparent_rectangle(img,575, int(volBar), 600, 300, (255, 210, 0))
     cv2.putText(img, f'{int(volPer * 100)}%', (550, 50), cv2.FONT_HERSHEY_SIMPLEX,
+                1, (255, 210, 0), 3)
+
+    return img
+
+
+def brightness_changer(length, img):
+    bPer = np.interp(length, [0, 120], [0, 100])
+    bBar = np.interp(length, [0, 120], [300, 60])
+
+    sbc.set_brightness(bPer)
+
+    transparent_rectangle(img,575, 60, 600, 300, (255, 210, 0),boundary=3)
+    transparent_rectangle(img,575, int(bBar), 600, 300, (255, 210, 0))
+    cv2.putText(img, f'{int(bPer)}%', (550, 50), cv2.FONT_HERSHEY_SIMPLEX,
                 1, (255, 210, 0), 3)
 
     return img
@@ -101,9 +115,10 @@ def meter_manager(img, hands, type):
         if type == "V":
             img = volume_changer(length, img)
             return img
+        
         elif type == "B":
-            # Handle brightness adjustment here if needed
-            pass
+            img = brightness_changer(length, img)
+            return img
 
     return img
 

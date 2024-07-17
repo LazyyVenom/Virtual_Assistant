@@ -2,9 +2,8 @@
 import cv2
 import mediapipe as mp
 import time
-import pyautogui as pg
+import numpy as np
 import math
-import os
 from ctypes import cast, POINTER
 from comtypes import CLSCTX_ALL
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
@@ -15,6 +14,11 @@ from FaceTracking import face_filter
 # Importing Hand Detector And Additional Functions
 from HandTracking import HandDetector
 
+#Initializing IMP Vars
+devices = AudioUtilities.GetSpeakers()
+interface = devices.Activate(
+    IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
+volume = cast(interface, POINTER(IAudioEndpointVolume))
 
 def recognizeFingerJoin(hands: list[list[int]]) -> bool:
     # OPENING/CLOSING OPTIONS
@@ -44,10 +48,10 @@ def transparent_circle(frame, center, radius, color, alpha=0.5):
     return frame
 
 
-def transparent_rectangle(frame, x1, y1, x2, y2, color, alpha=0.5):
+def transparent_rectangle(frame, x1, y1, x2, y2, color, alpha=0.5,boundary=cv2.FILLED):
     overlay = frame.copy()
 
-    cv2.rectangle(frame, (x1, y1), (x2, y2), color, cv2.FILLED)
+    cv2.rectangle(frame, (x1, y1), (x2, y2), color, boundary)
 
     cv2.addWeighted(overlay, alpha, frame, 1 - alpha, 0, frame)
 
@@ -68,32 +72,53 @@ def countFingers(hands: list[list[int]]) -> int:
     return fingers
 
 
-def volume_changer(vol):
-    devices = AudioUtilities.GetSpeakers()
-    interface = devices.Activate(
-        IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
-    volume = cast(interface, POINTER(IAudioEndpointVolume))
-    volRange = volume.GetVolumeRange()
+def volume_changer(length, img):
+    volPer = np.interp(length, [0, 100], [0, 1])
+    volBar = np.interp(length, [0, 100], [400, 150])
+
+    volume.SetMasterVolumeLevelScalar(volPer, None)
+
+    transparent_rectangle(img,50, 150, 85, 400, (255, 210, 0),boundary=3)
+    # cv2.rectangle(img, (50, 150), (85, 400), (255, 0, 0), 3)
+    transparent_rectangle(img,50, int(volBar), 85, 400, (255, 210, 0))
+    # cv2.rectangle(img, (50, int(volBar)), (85, 400), (255, 0, 0), cv2.FILLED)
+    cv2.putText(img, f'{int(volPer * 100)} %', (40, 450), cv2.FONT_HERSHEY_COMPLEX,
+                1, (255, 0, 0), 3)
+    cVol = int(volume.GetMasterVolumeLevelScalar() * 100)
+    cv2.putText(img, f'Vol Set: {cVol}', (400, 50), cv2.FONT_HERSHEY_COMPLEX,
+                1, (255, 0, 0), 3)
+
+    return img
 
 
-def meter_manager(img,hands,type):
+def meter_manager(img, hands, type):
     if hands:
-        pt1, pt2 = (hands[0][4][1],hands[0][4][2]), (hands[0][8][1],hands[0][8][2])
-        img = cv2.line(img,pt1,pt2,(255, 210, 0),5)
-        img = cv2.circle(img,((pt1[0]+pt2[0])//2,(pt1[1]+pt2[1])//2),8,(200, 130, 0),cv2.FILLED)
-        img = cv2.circle(img,pt1,8,(200, 130, 0),cv2.FILLED)
-        img = cv2.circle(img,pt2,8,(200, 130, 0),cv2.FILLED)
+        pt1 = (hands[0][4][1], hands[0][4][2])
+        pt2 = (hands[0][8][1], hands[0][8][2])
+        img = cv2.line(img, pt1, pt2, (255, 210, 0), 5)
+        img = cv2.circle(img, ((pt1[0] + pt2[0]) // 2, (pt1[1] + pt2[1]) // 2), 8, (200, 130, 0), cv2.FILLED)
+        img = cv2.circle(img, pt1, 8, (200, 130, 0), cv2.FILLED)
+        img = cv2.circle(img, pt2, 8, (200, 130, 0), cv2.FILLED)
+
+        length = int(np.hypot(pt2[0] - pt1[0], pt2[1] - pt1[1]))
+
+        if type == "V":
+            img = volume_changer(length, img)
+            return img
+        elif type == "B":
+            # Handle brightness adjustment here if needed
+            pass
 
     return img
 
 
-def volume(img,hands):
-    img = meter_manager(img,hands,type="V")
+def volume_(img, hands):
+    img = meter_manager(img, hands, type="V")
     return img
 
 
-def brightness(img,hands):
-    img = meter_manager(img,hands,type="B")
+def brightness(img, hands):
+    img = meter_manager(img, hands, type="B")
     return img
 
 
@@ -183,7 +208,7 @@ def main():
                         img,
                         True,
                         (rotation_turn1, rotation_turn2, rotation_turn3),
-                        not selected==0
+                        not selected == 0
                     )
 
                 elif fingers == 2 or selected == 2:
@@ -192,7 +217,7 @@ def main():
                         sub_toggleTimer = 0
                         selected = 2
                         selected_already = True
-                    
+
                     if selected == 2:
                         game_remote()
 
@@ -202,7 +227,7 @@ def main():
                         img,
                         True,
                         (rotation_turn1, rotation_turn2, rotation_turn3),
-                        not selected==0
+                        not selected == 0
                     )
 
                 elif fingers == 3 or selected == 3:
@@ -213,7 +238,7 @@ def main():
                         selected_already = True
 
                     if selected == 3:
-                        img = volume(img,hands)
+                        img = volume_(img, hands)
 
                     img, rotation_turn1, rotation_turn2, rotation_turn3 = face_filter(
                         face_detection,
@@ -221,9 +246,8 @@ def main():
                         img,
                         True,
                         (rotation_turn1, rotation_turn2, rotation_turn3),
-                        not selected==0
+                        not selected == 0
                     )
-
                 elif fingers == 4 or selected == 4:
                     sub_toggleTimer += 1 / fps
                     if sub_toggleTimer >= 2 and selected == 0:
@@ -232,7 +256,7 @@ def main():
                         selected_already = True
 
                     if selected == 4:
-                        brightness()
+                        img = brightness(img, hands)
 
                     img, rotation_turn1, rotation_turn2, rotation_turn3 = face_filter(
                         face_detection,
@@ -240,7 +264,7 @@ def main():
                         img,
                         True,
                         (rotation_turn1, rotation_turn2, rotation_turn3),
-                        not selected==0
+                        not selected == 0
                     )
 
                 elif fingers == 5:
@@ -256,7 +280,7 @@ def main():
                         img,
                         True,
                         (rotation_turn1, rotation_turn2, rotation_turn3),
-                        not selected==0
+                        not selected == 0
                     )
 
                 else:
@@ -269,16 +293,16 @@ def main():
                         True,
                         (rotation_turn1, rotation_turn2, rotation_turn3),
                     )
-            
+
             else:
-                img,rotation_turn1,rotation_turn2,rotation_turn3 = face_filter(face_detection,0,img,False,(rotation_turn1, rotation_turn2, rotation_turn3))
+                img, rotation_turn1, rotation_turn2, rotation_turn3 = face_filter(face_detection, 0, img, False, (rotation_turn1, rotation_turn2, rotation_turn3))
 
         except TypeError:
             print("Problem in Reading Image")
-            
+
         try:
             cv2.imshow("Virtual Assistant", img)
-            cv2.moveWindow("Virtual Assistant", 100, 200)
+            cv2.moveWindow("Virtual Assistant", 200, 200)
 
         except:
             cv2.imshow("Virtual Assistant", prev_img)
@@ -288,6 +312,5 @@ def main():
             cv2.destroyAllWindows()
             break
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
-    

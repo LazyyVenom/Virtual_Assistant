@@ -78,9 +78,9 @@ def volume_changer(length, img):
 
     volume.SetMasterVolumeLevelScalar(volPer, None)
 
-    transparent_rectangle(img,575, 60, 600, 300, (100, 200, 0),boundary=3)
+    transparent_rectangle(img,575, 60, 600, 300, (255, 210, 0),boundary=3)
     transparent_rectangle(img,575, int(volBar), 600, 300, (255, 210, 0))
-    cv2.putText(img, f'{int(volPer * 100)} %', (500, 50), cv2.FONT_HERSHEY_SIMPLEX,
+    cv2.putText(img, f'{int(volPer * 100)}%', (550, 50), cv2.FONT_HERSHEY_SIMPLEX,
                 1, (255, 210, 0), 3)
 
     return img

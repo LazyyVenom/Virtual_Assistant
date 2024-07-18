@@ -282,7 +282,7 @@ def main():
 
                     if selected == 1:
                         gesture_timer += 1 / fps
-                        if gesture_timer > 1.5:
+                        if gesture_timer > 1.2:
                             img = gestures_control(img,hands)
                             gesture_timer = 0
 

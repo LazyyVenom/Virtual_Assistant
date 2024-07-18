@@ -70,4 +70,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Contact
 
-For any inquiries, please contact (choubey.anubhav253@gmail.com)[mailto:choubey.anubhav253@gmail.com].
+For any inquiries, please contact choubey.anubhav253@gmail.com.

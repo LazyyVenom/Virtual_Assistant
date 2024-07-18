@@ -175,8 +175,24 @@ def gestures_control(img,hands):
     return img
 
 
-def game_remote():
-    print("Game Remote")
+def game_remote(img,hands):
+    if hands:
+        pt1 = (hands[0][0][1], hands[0][0][2])
+        pt2 = (hands[0][12][1], hands[0][12][2])
+
+        x_diff = pt1[0] - pt2[0]
+
+        if x_diff < -60:
+            img = cv2.circle(img, (600, 20), 10, (0, 255, 0), cv2.FILLED)
+            auto.press('right')
+            print("RIGHT")
+            
+        elif x_diff > 50:
+            img = cv2.circle(img, (600, 20), 10, (0, 255, 0), cv2.FILLED)
+            auto.press('left')
+            print("LEFT")
+
+    return img
 
 def main():
     """
@@ -271,7 +287,10 @@ def main():
                         selected_already = True
 
                     if selected == 2:
-                        img = game_remote(img,hands)
+                        gesture_timer += 1 / fps
+                        if gesture_timer > 0.1:
+                            img = game_remote(img,hands)
+                            gesture_timer = 0
 
                     img, rotation_turn1, rotation_turn2, rotation_turn3 = face_filter(
                         face_detection,

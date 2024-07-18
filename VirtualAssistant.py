@@ -133,10 +133,17 @@ def brightness(img, hands):
     return img
 
 
-def gestures_control(img, hands):
+def gestures_control(hands):
     if hands:
-        pass
-    return img
+        pt1 = (hands[0][0][1], hands[0][0][2])
+        pt2 = (hands[0][12][1], hands[0][12][2])
+
+        x_diff = pt1[0] - pt2[0]
+        if x_diff < -50:
+            print("Lesser True")
+            
+        elif x_diff > 50:
+            print("Greater True")
 
 
 def game_remote():
@@ -168,6 +175,7 @@ def main():
     settingFlag = False
     toggleTimer = 0
     sub_toggleTimer = 0
+    gesture_timer = 0
     selected = 0
     selected_already = False
     while True:
@@ -213,7 +221,10 @@ def main():
                         selected_already = True
 
                     if selected == 1:
-                        gestures_control(img,hands)
+                        gesture_timer += 1 / fps
+                        if gesture_timer > 2:
+                            gestures_control(hands)
+                            gesture_timer = 0
 
                     img, rotation_turn1, rotation_turn2, rotation_turn3 = face_filter(
                         face_detection,

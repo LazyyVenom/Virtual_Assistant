@@ -139,10 +139,10 @@ def gestures_control(hands):
         pt2 = (hands[0][12][1], hands[0][12][2])
 
         x_diff = pt1[0] - pt2[0]
-        if x_diff < -50:
+        if x_diff < -60:
             print("Lesser True")
             
-        elif x_diff > 50:
+        elif x_diff > 60:
             print("Greater True")
 
 

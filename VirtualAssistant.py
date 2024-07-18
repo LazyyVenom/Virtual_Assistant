@@ -211,7 +211,7 @@ def main():
                         selected_already = True
 
                     if selected == 1:
-                        gestures_control()
+                        gestures_control(img,hands)
 
                     img, rotation_turn1, rotation_turn2, rotation_turn3 = face_filter(
                         face_detection,

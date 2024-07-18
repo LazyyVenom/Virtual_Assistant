@@ -184,13 +184,25 @@ def game_remote(img,hands):
 
         if x_diff < -60:
             img = cv2.circle(img, (600, 20), 10, (0, 255, 0), cv2.FILLED)
-            auto.press('right')
+            auto.keyUp('left')
+            auto.keyDown('right')
             print("RIGHT")
             
         elif x_diff > 50:
             img = cv2.circle(img, (600, 20), 10, (0, 255, 0), cv2.FILLED)
-            auto.press('left')
+            auto.keyUp('right')
+            auto.keyDown('left')
             print("LEFT")
+        
+        else:
+            auto.keyUp('right')
+            auto.keyUp('left')
+
+        if hands[0][4][1] > hands[0][2][1]:
+            auto.keyDown('a')
+        
+        else:
+            auto.keyUp('a')
 
     return img
 
@@ -287,10 +299,10 @@ def main():
                         selected_already = True
 
                     if selected == 2:
-                        gesture_timer += 1 / fps
-                        if gesture_timer > 0.1:
-                            img = game_remote(img,hands)
-                            gesture_timer = 0
+                        # gesture_timer += 1 / fps
+                        # if gesture_timer > 0.01:
+                        img = game_remote(img,hands)
+                        # gesture_timer = 0
 
                     img, rotation_turn1, rotation_turn2, rotation_turn3 = face_filter(
                         face_detection,
@@ -373,7 +385,7 @@ def main():
 
         try:
             cv2.imshow("Virtual Assistant", img)
-            cv2.moveWindow("Virtual Assistant", 200, 200)
+            cv2.moveWindow("Virtual Assistant", 100, 200)
 
         except:
             cv2.imshow("Virtual Assistant", prev_img)

@@ -4,3 +4,4 @@ screen_brightness_control
 pyautogui
 numpy
 pycaw
+pynput

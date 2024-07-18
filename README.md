@@ -18,15 +18,8 @@ A gesture-based controller using OpenCV, Mediapipe, numpy, and PyCaw libraries t
 - **4 Fingers**: Control Brightness.
 - **5 Fingers (hold for 2 seconds)**: Exit the Application.
 
-## Demo Images
-
-| Gesture | Function            | Image                                        |
-|---------|---------------------|----------------------------------------------|
-| 1 Finger| Gesture Controller  | ![Gesture Controller](./demo/gesture1.png)   |
-| 2 Fingers| Game Remote       | ![Game Remote](./demo/gesture2.png)          |
-| 3 Fingers| Volume Control    | ![Volume Control](./demo/gesture3.png)       |
-| 4 Fingers| Brightness Control| ![Brightness Control](./demo/gesture4.png)   |
-| 5 Fingers| Exit              | ![Exit](./demo/gesture5.png)                 |
+## Demo 
+![Gesture Controller](./demo/demo.mp4)
 
 ## Installation
 

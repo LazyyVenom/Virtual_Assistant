@@ -133,8 +133,10 @@ def brightness(img, hands):
     return img
 
 
-def gestures_control():
-    print("Gestures Control")
+def gestures_control(img, hands):
+    if hands:
+        pass
+    return img
 
 
 def game_remote():

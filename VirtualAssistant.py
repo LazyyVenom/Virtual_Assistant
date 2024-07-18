@@ -133,25 +133,45 @@ def brightness(img, hands):
     return img
 
 
-def gestures_control(hands):
+def gestures_control(img,hands):
     if hands:
         pt1 = (hands[0][0][1], hands[0][0][2])
         pt2 = (hands[0][12][1], hands[0][12][2])
+        thumb_pt = (hands[0][4][1], hands[0][4][2])
+        index_pt = (hands[0][8][1], hands[0][8][2])
+        middle_pt = (hands[0][12][1], hands[0][12][2])
+
+        dist_thumb_index = int(np.hypot(thumb_pt[0] - index_pt[0], thumb_pt[1] - index_pt[1]))
+        dist_thumb_middle = int(np.hypot(thumb_pt[0] - middle_pt[0], thumb_pt[1] - middle_pt[1]))
 
         x_diff = pt1[0] - pt2[0]
         if x_diff < -60:
+            img = cv2.circle(img, (600, 20), 10, (0, 255, 0), cv2.FILLED)
             auto.keyDown('win')
             auto.press('tab')
             auto.keyUp('win')
-            auto.press('left')
+            auto.press('right')
             auto.press('enter')
             
         elif x_diff > 50:
+            img = cv2.circle(img, (600, 20), 10, (0, 255, 0), cv2.FILLED)
             auto.keyDown('win')
             auto.press('tab')
             auto.keyUp('win')
             auto.press('left')
             auto.press('enter')
+        
+        if dist_thumb_index < 16:
+            auto.keyDown('win')
+            auto.press('down')
+            auto.keyUp('win')
+
+        if dist_thumb_middle < 18:
+            auto.keyDown('alt')
+            auto.press('f4')
+            auto.keyUp('alt')
+
+    return img
 
 
 def game_remote():
@@ -214,9 +234,9 @@ def main():
             toggleTimer = 0
             selected_already = False
             if settingFlag:
-                cv2.circle(img, (600, 20), 10, (0, 255, 0), cv2.FILLED)
+                img = cv2.circle(img, (600, 20), 10, (0, 255, 0), cv2.FILLED)
             else:
-                cv2.circle(img, (600, 20), 10, (0, 0, 255), cv2.FILLED)
+                img = cv2.circle(img, (600, 20), 10, (0, 0, 255), cv2.FILLED)
 
         prev_img = img
         try:
@@ -230,8 +250,8 @@ def main():
 
                     if selected == 1:
                         gesture_timer += 1 / fps
-                        if gesture_timer > 2:
-                            gestures_control(hands)
+                        if gesture_timer > 1.5:
+                            img = gestures_control(img,hands)
                             gesture_timer = 0
 
                     img, rotation_turn1, rotation_turn2, rotation_turn3 = face_filter(

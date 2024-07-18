@@ -8,6 +8,11 @@ import screen_brightness_control as sbc
 from ctypes import cast, POINTER
 from comtypes import CLSCTX_ALL
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
+from pynput.keyboard import Key, Controller
+import time
+
+#Creating A Keyboard using Pynput
+keyboard = Controller()
 
 # Importing Face Detector related Libraries
 from FaceTracking import face_filter
@@ -184,25 +189,24 @@ def game_remote(img,hands):
 
         if x_diff < -60:
             img = cv2.circle(img, (600, 20), 10, (0, 255, 0), cv2.FILLED)
-            auto.keyUp('left')
-            auto.keyDown('right')
+            keyboard.press(Key.right)
+            keyboard.release(Key.left)
             print("RIGHT")
             
         elif x_diff > 50:
             img = cv2.circle(img, (600, 20), 10, (0, 255, 0), cv2.FILLED)
-            auto.keyUp('right')
-            auto.keyDown('left')
+            keyboard.press(Key.left)
+            keyboard.release(Key.right)
             print("LEFT")
         
         else:
-            auto.keyUp('right')
-            auto.keyUp('left')
+            keyboard.release(Key.left)
+            keyboard.release(Key.right)
 
-        if hands[0][4][1] > hands[0][2][1]:
-            auto.keyDown('a')
-        
+        if hands[0][4][1] < hands[0][2][1]:
+            keyboard.press('a')
         else:
-            auto.keyUp('a')
+            keyboard.release('a')
 
     return img
 
@@ -299,10 +303,10 @@ def main():
                         selected_already = True
 
                     if selected == 2:
-                        # gesture_timer += 1 / fps
-                        # if gesture_timer > 0.01:
-                        img = game_remote(img,hands)
-                        # gesture_timer = 0
+                        gesture_timer += 1 / fps
+                        if gesture_timer > 0.5:
+                            img = game_remote(img,hands)
+                            gesture_timer = 0
 
                     img, rotation_turn1, rotation_turn2, rotation_turn3 = face_filter(
                         face_detection,

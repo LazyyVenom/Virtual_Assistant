@@ -145,6 +145,7 @@ def gestures_control(img,hands):
         dist_thumb_middle = int(np.hypot(thumb_pt[0] - middle_pt[0], thumb_pt[1] - middle_pt[1]))
 
         x_diff = pt1[0] - pt2[0]
+        
         if x_diff < -60:
             img = cv2.circle(img, (600, 20), 10, (0, 255, 0), cv2.FILLED)
             auto.keyDown('win')

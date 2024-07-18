@@ -3,7 +3,7 @@ import cv2
 import mediapipe as mp
 import time
 import numpy as np
-import math
+import pyautogui as auto
 import screen_brightness_control as sbc
 from ctypes import cast, POINTER
 from comtypes import CLSCTX_ALL
@@ -140,10 +140,18 @@ def gestures_control(hands):
 
         x_diff = pt1[0] - pt2[0]
         if x_diff < -60:
-            print("Lesser True")
+            auto.keyDown('win')
+            auto.press('tab')
+            auto.keyUp('win')
+            auto.press('left')
+            auto.press('enter')
             
-        elif x_diff > 60:
-            print("Greater True")
+        elif x_diff > 50:
+            auto.keyDown('win')
+            auto.press('tab')
+            auto.keyUp('win')
+            auto.press('left')
+            auto.press('enter')
 
 
 def game_remote():

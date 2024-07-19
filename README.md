@@ -19,7 +19,7 @@ A gesture-based controller using OpenCV, Mediapipe, numpy, and PyCaw libraries t
 - **5 Fingers (hold for 2 seconds)**: Exit the Application.
 
 ## Demo 
-![Gesture Controller](./demo/demo.mp4)
+![Gesture Controller](https://www.linkedin.com/posts/anubhav-choubey_created-a-cv2-gesture-controller-sasta-activity-7219718876597551105-CxJ4?utm_source=share&utm_medium=member_android)
 
 ## Installation
 

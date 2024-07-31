@@ -19,7 +19,7 @@ A gesture-based controller using OpenCV, Mediapipe, numpy, and PyCaw libraries t
 - **5 Fingers (hold for 2 seconds)**: Exit the Application.
 
 ## Demo 
-![Gesture Controller](https://www.linkedin.com/feed/update/urn:li:activity:7219718876597551105/)
+![Gesture Controller](./demo/demo.mp4)
 
 ## Installation
 
